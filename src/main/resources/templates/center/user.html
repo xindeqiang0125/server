@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="user_toolbar" style="text-align: right">
+    <input id="user_search_textbox"/>
+    <a id="user_add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+    <a id="user_edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a id="user_delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+</div>
+<table id="user_datagrid"></table>
+<div id="user_dialog" style="width: 500px">
+    <form id="user_dialog_form" method="post">
+        <input id="user_id" name="id" type="hidden"/>
+        <div><input id="user_name" name="name" data-options="label: 'Name:',required:true"/></div>
+        <div><input id="user_tel" name="tel" data-options="label: 'Tel:',required:true"/></div>
+        <div><input id="user_password" name="password" data-options="label: 'PassWord:',required:true"/></div>
+        <div><input id="user_user_group" name="userGroup.id" data-options="label: 'UserGroup:',required:true"/></div>
+    </form>
+</div>
+<style>
+    form div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#user_search_textbox').textbox({
+        buttonText:'搜索',
+        iconCls:'icon-search',
+        iconAlign:'right',
+        prompt:'请输入名字或电话',
+        onClickButton:function () {
+            $('#user_datagrid').datagrid('reload',{nameOrTel:$('#user_search_textbox').textbox('getValue')});
+        },
+        onChange:function (newValue, oldValue) {
+            $('#user_datagrid').datagrid('reload',{nameOrTel:newValue});
+        }
+    });
+    $('#user_name,#user_tel,#user_password').textbox({
+        width:400,
+        height:30,
+        labelWidth:100
+    });
+    $('#user_user_group').combobox({
+        width:400,
+        height:30,
+        labelWidth:100,
+        url:'/user/findallusergroups',
+        valueField:'id',
+        textField:'name',
+        panelMaxHeight:200,
+        panelHeight:'auto',
+        editable:false
+    });
+    $('#user_datagrid').datagrid({
+        queryParams:{
+            nameOrTel:''
+        }
+    });
+    initDatagridPanel3($('#user_datagrid'),
+//        '/user/findallusergroups',
+        '/user/findusersbynameortel_page',
+        [[
+            {field:'id',title:'ID',width:10,align:'center'},
+            {field:'name',title:'用户名',width:10,align:'center'},
+            {field:'password',title:'密码',width:10,align:'center'},
+            {field:'tel',title:'电话',width:10,align:'center'},
+            {field:'userGroup',title:'所属用户组',width:10,align:'center',formatter: function(value,row,index){
+                return value.name;
+            }}
+        ]],
+        $('#user_toolbar'),$('#user_add'),$('#user_edit'),$('#user_delete'),
+        $('#user_dialog'),'增加/修改用户',$('#user_dialog_form'),
+        '/user/saveuser','/user/deleteuser',
+        function (row) {
+            if (row.id==null) $('#user_dialog_form').form('clear');
+            else {
+                $('#user_id').val(row.id);
+                $('#user_name').textbox('setValue',row.name);
+                $('#user_tel').textbox('setValue',row.tel);
+                $('#user_password').textbox('setValue',row.password);
+                $('#user_user_group').combobox('setValue',row.userGroup.id);
+            }
+        }
+    );
+</script>
+</body>
+</html>

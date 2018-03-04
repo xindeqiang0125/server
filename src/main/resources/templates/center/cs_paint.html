@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8"/>
+    <title>组态图形绘制</title>
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css"/>
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body style="height: 100%">
+<!--<input id="savefile" type="file"/>-->
+<!--<a href="javascript:void(0)" id="aa">保存</a>-->
+<!--菜单-->
+<div id="cspaint_menu" style="border-bottom: 1px solid #2984a4">
+    <a id="file" class="easyui-menubutton"
+       data-options="menu:'#file_menu',hasDownArrow:false">文件</a>
+    <div id="file_menu" style="width:150px;">
+        <!--<div data-options="iconCls:'icon-undo'">Undo</div>-->
+        <div onclick="openCanvasSizeDialog()">画布大小</div>
+        <div onclick="openFile()" data-options="iconCls:'icon-open'">打开</div>
+        <div onclick="saveFile()" data-options="iconCls:'icon-save'">保存</div>
+        <div onclick="saveAsFile()" data-options="iconCls:'icon-undo'">另存为</div>
+    </div>
+
+    <div id="shapes" style="width: 60%;display: inline-block;float: right">
+        <!--<a id="rect" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">□</a>-->
+        <span onclick="addRect()">矩形</span>
+        <span onclick="addCircle()">圆形</span>
+        <span onclick="addPolygon()">多边形</span>
+        <span onclick="addLine()">直线</span>
+        <span onclick="addLineArrow()">箭头</span>
+        <span onclick="addText()">文字</span>
+    </div>
+
+</div>
+
+<!--属性表格-->
+<div id="propertygrid_container" style="display: inline-block;float: right;background-color: #b52b27">
+    <table id="cspaint_propertygrid"></table>
+</div>
+<!--画布-->
+<div id="canvas_container" tabindex="0" style="display: inline-block;float: left;background-color: #0E2D5F">
+    <div id="cspaint_canvas_panel" class="easyui-panel" style="padding: 0px;background-color: #666666;position: absolute">
+        <canvas id="cspaint_canvas"
+                style="border: dashed 4px #aaaaaa;background-color: #eeeeee;
+                        position: inherit;z-index: 1"></canvas>
+        <canvas id="cspaint_canvas_select"
+                style="border: dashed 4px rgba(0,0,0,0);background-color: rgba(0,0,0,0);
+                        position: inherit;z-index: 2;"></canvas>
+    </div>
+</div>
+
+<!--画布尺寸设置对话框-->
+<div id="canvas_size_dialog" class="easyui-dialog">
+    <div><input id="canvas_width" style="width:200px"/></div>
+    <div><input id="canvas_height" style="width:200px"/></div>
+</div>
+
+<!--右键菜单-->
+<div id="context_menu" class="easyui-menu" style="width:150px">
+    <div onclick="makeGroup()" data-options="iconCls:'icon-redo'">组合</div>
+    <div onclick="unMakeGroup()" data-options="iconCls:'icon-undo'">取消组合</div>
+    <div class="menu-sep"></div>
+    <div onclick="toUpper()">上一层</div>
+    <div onclick="toLower()">下一层</div>
+    <div onclick="toBottom()">置底</div>
+    <div onclick="toTop()">置顶</div>
+    <div class="menu-sep"></div>
+    <div onclick="topAlign()">向上对齐</div>
+    <div onclick="bottomAlign()">向下对齐</div>
+    <div onclick="leftAlign()">向左对齐</div>
+    <div onclick="rightAlign()">向右对齐</div>
+    <div class="menu-sep"></div>
+    <div onclick="hMirror()">水平镜像</div>
+    <div onclick="vMirror()">竖直镜像</div>
+    <div onclick="rotateAngle(90)">顺时针旋转90°</div>
+    <div onclick="rotateAngle(-90)">逆时针旋转90°</div>
+    <div class="menu-sep"></div>
+    <div onclick="del()" data-options="iconCls:'icon-remove'">删除</div>
+    <div onclick="selectAll()">全选</div>
+</div>
+
+
+<link rel="stylesheet" type="text/css" href="/css/cs_paint.css"/>
+<script type="text/javascript" src="/js/paint/cs_paint.js"></script>
+<script type="text/javascript" src="/js/paint/PropertyGridDatas.js"></script>
+<script type="text/javascript" src="/js/paint/ClickEvent.js"></script>
+<script type="text/javascript" src="/js/paint/KeyEvent.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Shape.js"></script>
+<script type="text/javascript" src="/js/paint/obj_ShapeGroup.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Polygon.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Circle.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Rect.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Line.js"></script>
+<script type="text/javascript" src="/js/paint/obj_LineArrow.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Text.js"></script>
+</body>
+</html>

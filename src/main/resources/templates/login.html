@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>登录OPC管理系统</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div id="login_panel" style="width: 500px">
+    <form id="login_form" method="post" action="/login">
+        <div><input id="login_name" name="tel"/></div>
+        <div><input id="login_password" name="password"/></div>
+    </form>
+
+    <div><!--/*@thymesVar id="error" type="String"*/-->
+    <span id="error_info" style="color: #b52b27" th:text="${error}"></span></div>
+    <div><a id="login_btn" class="easyui-linkbutton" style="width: 60%">登录</a></div>
+</div>
+<style>
+    #login_panel div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#login_panel').window({
+        top:100,
+        title: '请输入电话和密码',
+        closable:false, collapsible:false,minimizable:false,maximizable:false,
+        draggable:false,resizable:false
+    });
+//    $('#login_form').form({
+//        url:'/111',
+//        iframe:false,
+//        success:function(data){
+//            var res=JSON.parse(data);
+//            if (res.result=='失败'){
+//                $('#error_info').text(res.msg);
+//            }else {
+//
+//            }
+//        }
+//    });
+    $('#login_name').textbox({
+        width:350,
+        height:40,
+        labelWidth:40,
+        label:'电话',
+        required:true
+    });
+    $('#login_password').passwordbox({
+        width:350,
+        height:40,
+        labelWidth:40,
+        label:'密码',
+        required:true
+    });
+    $('#login_btn').linkbutton({
+        size:'large',
+        onClick:function () {
+            $('#login_form').submit();
+//            $.post('',{},function () {
+//
+//            });
+        }
+    })
+</script>
+</body>
+</html>

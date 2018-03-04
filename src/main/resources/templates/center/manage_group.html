@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="tb_group" style="text-align: right">
+    <a id="group_add"  class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+    <a id="group_edit"  class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a id="group_delete"  class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+</div>
+<table id="dg_group"></table>
+<div id="group_dialog" style="width: 600px;height: 350px">
+    <form id="group_dialog_form" method="post">
+        <div><input id="group_id" name="id" data-options="label: 'Id:',readonly:true"/></div>
+        <div><input id="group_groupName" name="groupName" data-options="label: 'GroupName:',required:true"/></div>
+        <div><select id="group_active" name="active" data-options="label: 'Active:',required:true">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select></div>
+        <div><input id="group_updateRate" name="updateRate" data-options="label: 'UpdateRate(ms):',required:true"/></div>
+        <div><input id="group_percentDeadBand" name="percentDeadBand" data-options="label: 'PercentDeadBand(%):',required:true"/></div>
+        <div><input id="group_opc" name="opc.id" data-options="label: 'Opc:',required:true"/></div>
+    </form>
+</div>
+<style>
+    #group_dialog div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#group_id,#group_groupName').textbox({
+        width:500,
+        height:30,
+        labelWidth:150
+    });
+    $('#group_updateRate,#group_percentDeadBand').numberbox({
+        width:500,
+        height:30,
+        labelWidth:150
+    });
+    $('#group_percentDeadBand').numberbox({
+        min:0,
+        max:100,
+        precision:2
+    });
+    $('#group_active,#group_opc').combobox({
+        width:500,
+        height:30,
+        labelWidth:150,
+        panelHeight:'auto',
+        panelMaxHeight:100,
+        editable:false
+    });
+    $('#group_opc').combobox({
+        url:'/manage/getopcs',
+        valueField:'id',
+        textField:'host'
+    });
+
+    initDatagridPanel3($('#dg_group'),'/manage/getallgroupsbypage',
+        [[
+            {field:'id',title:'ID',width:20,align:'center'},
+            {field:'groupName',title:'GroupName',width:100,align:'center'},
+            {field:'active',title:'Active',width:50,align:'center'},
+            {field:'updateRate',title:'UpdateRate',width:100,align:'center'},
+            {field:'percentDeadBand',title:'PercentDeadBand',width:100,align:'center'},
+            {field:'opc',title:'Opc',width:250,align:'center',formatter: function(value,row,index){
+                return value.host+":"+value.serverProgID+":"+value.serverClientHandle;}
+            }
+        ]],$('#tb_group'),$('#group_add'),$('#group_edit'),$('#group_delete'),
+        $('#group_dialog'),'增加/修改GROUP',$('#group_dialog_form'),'/manage/savegroup','/manage/deletegroups',
+        function (row) {
+            $('#group_id').textbox('setValue',row.id);
+            $('#group_groupName').textbox('setValue',row.groupName);
+            $('#group_active').combobox('setValue',row.active);
+            $('#group_updateRate').numberbox('setValue',row.updateRate);
+            $('#group_percentDeadBand').numberbox('setValue',row.percentDeadBand);
+            $('#group_opc').combobox('setValue',row.opc==null?null:row.opc.id);
+        });
+</script>
+</body>
+</html>

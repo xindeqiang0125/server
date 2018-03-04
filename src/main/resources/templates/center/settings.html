@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div style="height: 98%" id="settings">
+    <div style="width: 25%;height: 100%;display: inline-block;float: right">
+        <div class="easyui-panel"
+             data-options="title:'开/关OPC',fit:true">
+            <div><a id="start_opc_btn" class="easyui-linkbutton">启动后台OPC</a></div>
+            <div><a id="stop_opc_btn" class="easyui-linkbutton">停止后台OPC</a></div>
+        </div>
+    </div>
+    <div style="width: 70%;height: 100%;display: inline-block">
+        <div id="settings_window"
+             class="easyui-panel"
+             data-options="title:'系统详细设置',fit:true">
+            <div id="settings_toolbar" style="text-align: center">
+                <a id="settings_save_btn" class="easyui-linkbutton">保存</a>
+            </div>
+            <div><input id="push_interval" name="pushInterval"/></div>
+            <div><input id="save_interval" name="saveInterval"/></div>
+        </div>
+    </div>
+
+</div>
+<style>
+    #start_opc_btn,#stop_opc_btn{
+        width: 90%;
+        background-color: #0E2D5F;
+    }
+    #settings .easyui-panel div{
+        text-align: center;
+        margin: 15px;
+    }
+</style>
+<script>
+    $('#settings_save_btn').linkbutton({
+        iconCls:'icon-save',
+        onClick:function () {
+            $.post('/settings/save', {
+                pushInterval:$('#push_interval').numberbox('getValue'),
+                saveInterval:$('#save_interval').numberbox('getValue')
+            }, function (data) {
+                showMessager(data);
+            });
+        }
+    });
+    $('#settings_window').panel({
+        onBeforeOpen:function () {
+            $.post('/settings/get',{},function (data) {
+                $('#push_interval').numberbox('setValue',data.pushInterval)
+                $('#save_interval').numberbox('setValue',data.saveInterval)
+            })
+        }
+    })
+
+    $('#push_interval,#save_interval').numberbox({
+        required: true,
+        width: 400,
+        height: 30,
+        labelWidth: 150,
+        min: 0,
+        precision: 0
+    });
+    $('#push_interval').numberbox({
+        label: '推送间隔(毫秒)'
+    });
+    $('#save_interval').numberbox({
+        label: '历史数据存取间隔(毫秒)'
+    });
+    $('#start_opc_btn').click(function () {
+        $.post('/opcClientStart', {}, function (data) {
+            showMessager(data);
+        });
+
+    });
+    $('#stop_opc_btn').click(function () {
+        $.post('/opcClientStop', {}, function (data) {
+            showMessager(data);
+        });
+
+    });
+</script>
+</body>
+</html>

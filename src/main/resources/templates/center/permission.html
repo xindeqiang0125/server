@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div style="height: 99%">
+    <div style="width: 40%;height:100%;display:inline-block">
+        <div class="easyui-panel" data-options="title:'权限分类',fit:true">
+            <table id="dg_permission_family"></table>
+        </div>
+
+    </div>
+    <div style="width: 58%;height:100%;display:inline-block">
+        <div class="easyui-panel" data-options="title:'权限',fit:true">
+            <input id="tagbox_permission_family"/>
+            <div style="height: 95%">
+                <table id="dg_permission"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="permission_family_dialog" style="width: 500px;height: 250px">
+    <form id="permission_family_form" method="post">
+    <div><input id="permission_family_id" name="id" data-options="label: 'Id:',readonly:true"/></div>
+    <div><input id="permission_family_name" name="name" data-options="label: '名称:',required:true"/></div>
+    <div><input id="permission_family_detail" name="detail" data-options="label: '详细信息:',multiline:true"/></div>
+    </form>
+</div>
+<div id="permission_dialog" style="width: 500px;height: 250px">
+    <form id="permission_form" method="post">
+        <input id="permission_permission_family_id" name="permissionFamily.id" type="hidden"/>
+        <div><input id="permission_id" name="id" data-options="label: 'Id:',readonly:true"/></div>
+        <div><input id="permission_name" name="name" data-options="label: '名称:',required:true"/></div>
+        <div><input id="permission_url" name="url" data-options="label: 'URL:',required:true"/></div>
+    </form>
+</div>
+<style>
+    form div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#tagbox_permission_family').tagbox({
+        multiple:false,
+        label:'权限所属分类',
+        labelWidth:120,
+        valueField:'id',
+        textField:'name',
+        editable:false,
+        url:'/permission/findallpermissionfamily',
+        onChange:function (newValue,oldValue) {
+            $('#dg_permission').datagrid('reload',{
+                permissionFamilyId:newValue
+            });
+            $('#permission_permission_family_id').val(newValue);
+        }
+    });
+
+    $('#permission_family_id,#permission_family_name,#permission_family_detail' +
+        ',#permission_id,#permission_name,#permission_url').textbox({
+        width: 400,
+        height: 30,
+        labelWidth: 100
+    });
+    $('#permission_family_detail').textbox({
+        height: 60
+    });
+    initDatagridPanel2($('#dg_permission_family'),
+        '/permission/findallpermissionfamily',
+        [[
+            {field:'id',title:'ID',width:20,align:'center',hidden:true},
+            {field:'name',title:'Name',width:80,align:'center'},
+            {field:'detail',title:'Detail',width:160,align:'center'}
+        ]],
+        $('#permission_family_dialog'),
+        '增加权限分类',
+        '/permission/deletepermissionfamily',
+        $('#permission_family_form'),
+        '/permission/addpermissionfamily');
+    initDatagridPanel2($('#dg_permission'),
+        '/permission/findpermissionbyfamily',
+        [[
+            {field:'id',title:'ID',width:20,align:'center',hidden:true},
+            {field:'name',title:'Name',width:100,align:'center'},
+            {field:'url',title:'URI',width:80,align:'center'}
+        ]],
+        $('#permission_dialog'),
+        '增加权限',
+        '/permission/deletepermission',
+        $('#permission_form'),
+        '/permission/addpermission');
+    $('#dg_permission_family').datagrid({
+        onSelect:function (index, row) {
+            $('#tagbox_permission_family').tagbox('setValue',row.id);
+        },
+        onLoadSuccess:function (data) {
+            $('#tagbox_permission_family').tagbox('reload');
+            if (data.total!=0){
+                $('#dg_permission_family').datagrid('selectRow',0);
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

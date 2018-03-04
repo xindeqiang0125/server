@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="tb_item" style="text-align: right">
+
+    <input id="item_search_groupId" class="easyui-combobox" name="groupId" data-options="url:'/manage/getgroups',valueField:'id',textField:'groupName',
+    width:120,label: 'Group:',labelAlign:'right',labelWidth:45,panelHeight:'auto',panelMaxHeight:100,editable:false"/>
+    <input id="item_search_itemName" class="easyui-textbox" name="itemName" data-options="prompt:'ItemName',buttonIcon:'icon-search',buttonText:'搜索'"/>
+
+    <a id="item_add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+    <a id="item_edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a id="item_delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+</div>
+<table id="dg_item"></table>
+<div id="item_dialog" style="width: 600px;height: 500px">
+    <form id="item_dialog_form" method="post">
+        <div><input id="item_id" name="id" data-options="label: 'Id:',readonly:true"/></div>
+        <div><input id="item_itemName" name="itemName" data-options="label: 'ItemName:',required:true"/></div>
+        <div><select id="item_active" name="active" data-options="label: 'Active:',required:true">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select></div>
+        <div><input id="item_accessPath" name="accessPath" data-options="label: 'AccessPath:'"/></div>
+        <div><select id="item_type" name="type" data-options="label: 'Type:',required:true">
+            <option value="DOUBLE">DOUBLE</option>
+            <option value="INTEGER">INTEGER</option>
+            <option value="STRING">STRING</option>
+            <option value="BOOLEAN">BOOLEAN</option>
+        </select></div>
+        <div><input id="item_min" name="min" data-options="label: 'ItemMin:'"/></div>
+        <div><input id="item_max" name="max" data-options="label: 'ItemMax:'"/></div>
+        <div><input id="item_normal" name="normal" data-options="label: 'ItemNormal:'"/></div>
+        <div><input id="item_unit" name="unit" data-options="label: 'ItemUnit:'"/></div>
+        <div><input id="item_group" name="group.id" data-options="label: 'Group:',required:true"/></div>
+    </form>
+</div>
+<style>
+    #item_dialog div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#item_search_itemName').textbox({
+        onClickButton:function () {
+            $('#dg_item').datagrid({
+                url: '/manage/getitemsbypage',
+                queryParams:{
+                    groupId:$("#item_search_groupId").combobox('getValue'),
+                    itemName:$("#item_search_itemName").textbox('getValue')
+                }
+            })
+        },
+        onChange:function () {
+            $('#dg_item').datagrid({
+                url: '/manage/getitemsbypage',
+                queryParams:{
+                    groupId:$("#item_search_groupId").combobox('getValue'),
+                    itemName:$("#item_search_itemName").textbox('getValue')
+                }
+            })
+        }
+    });
+
+
+
+    $('#item_id,#item_itemName,#item_accessPath,#item_unit').textbox({
+        width:500,
+        height:30,
+        labelWidth:150
+    });
+    $('#item_min,#item_max,#item_normal').numberbox({
+        width:500,
+        height:30,
+        labelWidth:150
+    });
+    $('#item_active,#item_type,#item_group').combobox({
+        width:500,
+        height:30,
+        labelWidth:150,
+        panelHeight:'auto',
+        panelMaxHeight:100,
+        editable:false
+    });
+    $('#item_group').combobox({
+        url:'/manage/getgroups',
+        valueField:'id',
+        textField:'groupName'
+    });
+
+    initDatagridPanel3($('#dg_item'),'/manage/getallitemsbypage',
+        [[
+            {field:'id',title:'ID',width:20,align:'center'},
+            {field:'itemName',title:'ItemName',width:150,align:'center'},
+            {field:'active',title:'Active',width:100,align:'center'},
+            {field:'accessPath',title:'AccessPath',width:100,align:'center'},
+            {field:'type',title:'Type',width:100,align:'center'},
+            {field:'min',title:'ItemMin',width:60,align:'center'},
+            {field:'max',title:'ItemMax',width:60,align:'center'},
+            {field:'normal',title:'ItemNormal',width:60,align:'center'},
+            {field:'unit',title:'ItemUnit',width:80,align:'center'},
+            {field:'group',title:'Group',width:50,align:'center',formatter: function(value,row,index){
+                return value.groupName;}
+            }
+        ]],$('#tb_item'),$('#item_add'),$('#item_edit'),$('#item_delete'),
+        $('#item_dialog'),'增加/修改ITEM',$('#item_dialog_form'),'/manage/saveitem','/manage/deleteitems',
+        function (row) {
+            $('#item_id').textbox('setValue',row.id);
+            $('#item_unit').textbox('setValue',row.unit);
+            $('#item_group').combobox('setValue',row.group==null?null:row.group.id);
+            $('#item_accessPath').textbox('setValue',row.accessPath);
+            $('#item_active').combobox('setValue',row.active);
+            $('#item_itemName').textbox('setValue',row.itemName);
+            $('#item_max').numberbox('setValue',row.max);
+            $('#item_min').numberbox('setValue',row.min);
+            $('#item_normal').numberbox('setValue',row.normal);
+            $('#item_type').combobox('setValue',row.type);
+        });
+</script>
+</body>
+</html>

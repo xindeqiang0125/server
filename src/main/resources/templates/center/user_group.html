@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="user_group_toolbar" style="text-align: right">
+    <a id="user_group_add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+    <a id="user_group_edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a id="user_group_delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+</div>
+<table id="user_group_datagrid"></table>
+<div id="user_group_dialog" style="width: 400px">
+    <form id="user_group_dialog_form" method="post">
+        <input id="user_group_id" name="id" type="hidden"/>
+        <div><input id="user_group_name" name="name" data-options="label: 'Name:',required:true"/></div>
+    </form>
+    <div style="font-size: 15px;color: #1f637b">拥有权限：<a id="user_group_dialog_permissions_selectall">全选</a>
+        <a id="user_group_dialog_permissions_unselectall">取消全选</a></div>
+    <div style="height: 400px">
+        <div id="user_group_dialog_permission"></div>
+    </div>
+</div>
+<style>
+    form div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#user_group_dialog form div input').textbox({
+        width:300,
+        height:30,
+        labelWidth:70
+    });
+    initDatagridPanel3($('#user_group_datagrid'),
+        '/user/findallusergroups',
+        [[
+            {field:'id',title:'ID',width:10,align:'center'},
+            {field:'name',title:'Name',width:10,align:'center'}
+        ]],
+        $('#user_group_toolbar'),$('#user_group_add'),$('#user_group_edit'),$('#user_group_delete'),
+        $('#user_group_dialog'),'增加/修改用户组',$('#user_group_dialog_form'),
+        '/user/saveusergroup','/user/deleteusergroup',
+        function (row) {
+            $('#user_group_id').val(row.id);
+            $('#user_group_name').textbox('setValue',row.name);
+
+            $('#user_group_dialog_permission').datalist('unselectAll');
+            if (row.id!=null){
+                $.post('/user/findpermissionsbyusergroup',
+                    {
+                        userGroupId:row.id
+                    },function (data) {
+                    for (var i=0;data.length>i;i++){
+                        $('#user_group_dialog_permission').datalist('selectRecord',data[i].id);
+                    }
+                    });
+            }
+        }
+    );
+    $('#user_group_dialog_permission').datalist({
+        rownumbers:true,
+        url: '/permission/findpermissionbyfamily',
+        idField:'id',
+        valueField:'id',
+        textField:'name',
+        groupField:'permissionFamily',
+        checkbox: true,
+        singleSelect:false,
+        fit:true
+//        groupFormatter:function (value, rows) {
+//            return value.name;
+//        }
+    });
+    $('#user_group_datagrid').datagrid({
+        pagination: false
+    });
+    $('#user_group_dialog_form').form({
+        onSubmit:function (param) {
+            var rows=$('#user_group_dialog_permission').datalist('getSelections');
+            var ids=new Array();
+            for(var i=0;rows.length>i;i++){
+                ids[i]=rows[i].id;
+            }
+            param.permissionIds=JSON.stringify(ids);
+            return $(this).form('validate');
+        }
+    });
+    $('#user_group_dialog').dialog({
+        onBeforeOpen:function () {
+            $('#user_group_dialog_permission').datalist('reload');
+        }
+    });
+    $('#user_group_dialog_permissions_selectall').linkbutton({
+        onClick:function () {
+            $('#user_group_dialog_permission').datalist('selectAll');
+        }
+    });
+    $('#user_group_dialog_permissions_unselectall').linkbutton({
+        onClick:function () {
+            $('#user_group_dialog_permission').datalist('unselectAll');
+        }
+    });
+</script>
+</body>
+</html>

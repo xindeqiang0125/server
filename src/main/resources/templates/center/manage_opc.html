@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="tb_opc" style="text-align: right">
+    <a id="opc_add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+    <a id="opc_edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a id="opc_delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+</div>
+<table id="dg_opc"></table>
+<div id="opc_dialog" style="width: 600px;height: 300px">
+    <form id="opc_dialog_form" method="post">
+        <div><input id="OpcId" name="id" data-options="label: 'Id:',readonly:true"/></div>
+        <div><input id="OpcHost" name="host" data-options="label: 'Host:',required:true"/></div>
+        <div><input id="OpcServerProgID" name="serverProgID" data-options="label: 'ServerProgID:',required:true"/></div>
+        <div><input id="OpcServerClientHandle" name="serverClientHandle" data-options="label: 'ServerClientHandle:',required:true"/></div>
+    </form>
+</div>
+<style>
+    #opc_dialog div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#opc_dialog input').textbox({
+        width:500,
+        height:30,
+        labelWidth:150
+    });
+
+    initDatagridPanel3($('#dg_opc'),'/manage/getopcsbypage',
+        [[
+            {field:'id',title:'ID',width:10,align:'center'},
+            {field:'host',title:'Host',width:100,align:'center'},
+            {field:'serverProgID',title:'ServerProgID',width:100,align:'center'},
+            {field:'serverClientHandle',title:'ServerClientHandle',width:100,align:'center'}
+        ]],$('#tb_opc'),$('#opc_add'),$('#opc_edit'),$('#opc_delete'),
+        $('#opc_dialog'),'增加/修改OPC',$('#opc_dialog_form'),'/manage/saveopc','/manage/deleteopcs',
+        function (row) {
+            $('#OpcId').textbox('setValue',row.id);
+            $('#OpcHost').textbox('setValue',row.host);
+            $('#OpcServerProgID').textbox('setValue',row.serverProgID);
+            $('#OpcServerClientHandle').textbox('setValue',row.serverClientHandle);
+        });
+</script>
+</body>
+</html>

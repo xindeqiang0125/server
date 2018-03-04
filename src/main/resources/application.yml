@@ -1,0 +1,18 @@
+server:
+  port: 8080
+#  context-path: /xcs
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xcs?useSSL=false
+    username: root
+    password: xdq123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  jackson:
+    serialization:
+      indent_output: true
+  thymeleaf:
+    cache: false

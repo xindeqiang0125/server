@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickOpc()">OPC管理</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickGroup()">Group管理</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickItem()">Item管理</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickUser()">用户管理</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickUserGroup()">用户组管理</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickPermission()">权限管理</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickSettings()">系统设置</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickCsPaint()">组态图形绘制</a>
+<script>
+    function clickOpc() {
+        addTab('Opc管理','/center/manage_opc');
+    }
+    function clickGroup() {
+        addTab('Group管理','/center/manage_group');
+    }
+    function clickItem() {
+        addTab('Item管理','/center/manage_item');
+    }
+    function clickSettings() {
+        addTab('系统设置','/center/settings');
+    }
+    function clickCsPaint() {
+//        addTab('组态图形绘制','/center/cs_paint');
+        window.open('/center/cs_paint');
+    }
+    function clickUser() {
+        addTab('用户管理','/center/user');
+    }
+    function clickUserGroup() {
+        addTab('用户组管理','/center/user_group');
+    }
+    function clickPermission() {
+        addTab('权限管理','/center/permission');
+    }
+    function addTab(title, href) {
+        if ($('#tt').tabs('exists', title)) {
+            $('#tt').tabs('select', title);
+        } else {
+            $('#tt').tabs('add', {
+                title: title,
+                selected: true,
+                closable: true,
+                href: href
+            });
+        }
+    }
+</script>
+</body>
+</html>
