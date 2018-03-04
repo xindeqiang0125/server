@@ -6,7 +6,7 @@ function Text() {
     this.width = 0;
     this.height = 0;
 
-    this.text;
+    this.text=[];
     this.font = '';
     this.fontColor = '#000000';
     this.fontSize = 14;
