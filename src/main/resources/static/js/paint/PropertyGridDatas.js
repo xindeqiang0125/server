@@ -1,7 +1,8 @@
 var polygonDatas = {
-    "total": 8,
+    "total": 9,
     "rows": [
         {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
         {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
@@ -21,27 +22,27 @@ function setPolygonDatas(shape) {
         data: polygonDatas,
         onAfterEdit: function (index, row, changes) {
             var value = changes.value;
-            if (value === null) return;
+            if (value == null) return;
             switch (index) {
-                case 1:
+                case 2:
                     shape.move(value - shape.startX, 0);
                     break;
-                case 2:
+                case 3:
                     shape.move(0, value - shape.startY);
                     break;
-                case 3:
+                case 4:
                     shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
                     break;
-                case 4:
+                case 5:
                     shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
                     break;
-                case 5:
+                case 6:
                     shape.setStyle(value, shape.lineColor, shape.fillColor);
                     break;
-                case 6:
+                case 7:
                     shape.setStyle(shape.lineWidth, value, shape.fillColor);
                     break;
-                case 7:
+                case 8:
                     shape.setStyle(shape.lineWidth, shape.lineColor, value);
                     break;
             }
@@ -50,10 +51,52 @@ function setPolygonDatas(shape) {
     })
 }
 
-var rectDatas = {
-    "total": 10,
+var groupDatas = {
+    "total": 6,
     "rows": [
         {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
+        {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "height", "value": "", "group": "Position/Size", "editor": "numberbox"}
+    ]
+};
+
+function setGroupDatas(shape) {
+    for (var i = 0, len = groupDatas.rows.length; i < len; i++) {
+        var obj = groupDatas.rows[i];
+        obj.value = shape[obj.name];
+    }
+    $('#cspaint_propertygrid').propertygrid({
+        data: groupDatas,
+        onAfterEdit: function (index, row, changes) {
+            var value = changes.value;
+            if (value == null) return;
+            switch (index) {
+                case 2:
+                    shape.move(value - shape.startX, 0);
+                    break;
+                case 3:
+                    shape.move(0, value - shape.startY);
+                    break;
+                case 4:
+                    shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
+                    break;
+                case 5:
+                    shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
+                    break;
+            }
+            screen.reDraw();
+        }
+    })
+}
+
+var rectDatas = {
+    "total": 11,
+    "rows": [
+        {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
         {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
@@ -75,33 +118,33 @@ function setRectDatas(shape) {
         data: rectDatas,
         onAfterEdit: function (index, row, changes) {
             var value = changes.value;
-            if (value === null) return;
+            if (value == null) return;
             switch (index) {
-                case 1:
+                case 2:
                     shape.move(value - shape.startX, 0);
                     break;
-                case 2:
+                case 3:
                     shape.move(0, value - shape.startY);
                     break;
-                case 3:
+                case 4:
                     shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
                     break;
-                case 4:
+                case 5:
                     shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
                     break;
-                case 5:
+                case 6:
                     shape.setStyle(value, shape.lineColor, shape.fillColor);
                     break;
-                case 6:
+                case 7:
                     shape.setStyle(shape.lineWidth, value, shape.fillColor);
                     break;
-                case 7:
+                case 8:
                     shape.setStyle(shape.lineWidth, shape.lineColor, value);
                     break;
-                case 8:
+                case 9:
                     shape.setShapeSize(value, shape.shapeHeight);
                     break;
-                case 9:
+                case 10:
                     shape.setShapeSize(shape.shapeWidth, value);
                     break;
             }
@@ -111,9 +154,10 @@ function setRectDatas(shape) {
 }
 
 var circleDatas = {
-    "total": 10,
+    "total": 11,
     "rows": [
         {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
         {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
@@ -135,33 +179,33 @@ function setCircleDatas(shape) {
         data: circleDatas,
         onAfterEdit: function (index, row, changes) {
             var value = changes.value;
-            if (value === null) return;
+            if (value == null) return;
             switch (index) {
-                case 1:
+                case 2:
                     shape.move(value - shape.startX, 0);
                     break;
-                case 2:
+                case 3:
                     shape.move(0, value - shape.startY);
                     break;
-                case 3:
+                case 4:
                     shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
                     break;
-                case 4:
+                case 5:
                     shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
                     break;
-                case 5:
+                case 6:
                     shape.setStyle(value, shape.lineColor, shape.fillColor);
                     break;
-                case 6:
+                case 7:
                     shape.setStyle(shape.lineWidth, value, shape.fillColor);
                     break;
-                case 7:
+                case 8:
                     shape.setStyle(shape.lineWidth, shape.lineColor, value);
                     break;
-                case 8:
+                case 9:
                     shape.setAB(value, shape.b);
                     break;
-                case 9:
+                case 10:
                     shape.setAB(shape.a, value);
                     break;
             }
@@ -171,9 +215,10 @@ function setCircleDatas(shape) {
 }
 
 var lineDatas = {
-    "total": 8,
+    "total": 9,
     "rows": [
         {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
         {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
@@ -193,27 +238,27 @@ function setLineDatas(shape) {
         data: lineDatas,
         onAfterEdit: function (index, row, changes) {
             var value = changes.value;
-            if (value === null) return;
+            if (value == null) return;
             switch (index) {
-                case 1:
+                case 2:
                     shape.move(value - shape.startX, 0);
                     break;
-                case 2:
+                case 3:
                     shape.move(0, value - shape.startY);
                     break;
-                case 3:
+                case 4:
                     shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
                     break;
-                case 4:
+                case 5:
                     shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
                     break;
-                case 5:
+                case 6:
                     shape.setStyle(value, shape.lineColor);
                     break;
-                case 6:
+                case 7:
                     shape.setStyle(shape.lineWidth, value);
                     break;
-                case 7:
+                case 8:
                     shape.setLineLength(value);
                     break;
             }
@@ -223,9 +268,10 @@ function setLineDatas(shape) {
 }
 
 var textDatas = {
-    "total": 8,
+    "total": 9,
     "rows": [
         {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
         {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
@@ -241,31 +287,36 @@ function setTextDatas(shape) {
         var obj = textDatas.rows[i];
         obj.value = shape[obj.name];
     }
+    textDatas.rows[6].value=shape.text[0];
+    for (var i = 1, len = shape.text.length; i < len; i++) {
+        var obj = shape.text[i];
+        textDatas.rows[6].value+='\n'+obj;
+    }
     $('#cspaint_propertygrid').propertygrid({
         data: textDatas,
         onAfterEdit: function (index, row, changes) {
             var value = changes.value;
-            if (value === null) return;
+            if (value == null) return;
             switch (index) {
-                case 1:
+                case 2:
                     shape.move(value - shape.startX, 0);
                     break;
-                case 2:
+                case 3:
                     shape.move(0, value - shape.startY);
                     break;
-                case 3:
+                case 4:
                     shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
                     break;
-                case 4:
+                case 5:
                     shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
                     break;
-                case 5:
+                case 6:
                     shape.setText(value);
                     break;
-                case 6:
+                case 7:
                     shape.setStyle(shape.fontColor, value);
                     break;
-                case 7:
+                case 8:
                     shape.setStyle(value,shape.fontSize);
                     break;
             }
@@ -275,7 +326,7 @@ function setTextDatas(shape) {
 }
 
 function changePropertyGridDatas(shape) {
-    if (shape === null) return;
+    if (shape == null) return;
     switch (shape.type) {
         case 'rect':
             setRectDatas(shape);
@@ -292,6 +343,9 @@ function changePropertyGridDatas(shape) {
             break;
         case 'text':
             setTextDatas(shape);
+            break;
+        case 'group':
+            setGroupDatas(shape);
             break;
     }
 

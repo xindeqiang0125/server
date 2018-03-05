@@ -24,18 +24,28 @@ Text.prototype.draw = function () {
     for (var i = 0, len = this.text.length; i < len; i++) {
         var obj = this.text[i];
         cxt.fillText(obj, this.startX, this.startY + i * this.fontSize);
+    }
+    cxt.restore();
+};
+Text.prototype.measure=function () {
+    cxt.save();
+    cxt.font = 'normal normal ' + this.fontSize + 'px arial';
+    for (var i = 0, len = this.text.length; i < len; i++) {
+        var obj = this.text[i];
         this.width = Math.max(this.width, cxt.measureText(obj).width);
     }
+    this.height=this.fontSize * this.text.length;
     cxt.restore();
 };
 Text.prototype.setText = function (text) {
     this.text = text.split('\n');
-    this.height = this.fontSize * this.text.length;
+    this.measure();
     return this;
 };
 Text.prototype.setStyle = function (fontColor, fontSize) {
     this.fontColor = fontColor;
     this.fontSize = fontSize;
+    this.measure();
     return this;
 };
 Text.prototype.move = function (moveX, moveY) {

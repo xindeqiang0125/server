@@ -85,11 +85,28 @@ var screen = {
     }
 };
 
+function invertColor(color) {
+    var r=parseInt(color.substr(1,2),16);
+    var g=parseInt(color.substr(3,2),16);
+    var b=parseInt(color.substr(5,2),16);
+    r = (255-r).toString(16);
+    g = (255-g).toString(16);
+    b = (255-b).toString(16);
+    if (r.length==1) r='0'+r;
+    if (g.length==1) g='0'+g;
+    if (b.length==1) b='0'+b;
+    return '#'+r+g+b;
+};
 //<editor-fold desc="初始化控件">
 $('#cspaint_propertygrid').propertygrid({
     showGroup: true,
     scrollbarSize: 0,
     fit: true,
+    rowStyler:function (index,row) {
+        if (row.name.indexOf('Color')!=-1) {
+            return 'background-color:'+row.value+';color:'+invertColor(row.value);
+        }
+    },
     data: {
         "total": 4, "rows": [
             {"name": "ID", "value": "Bill Smith", "group": "ID Settings", "editor": "text"},
