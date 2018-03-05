@@ -268,7 +268,7 @@ function setLineDatas(shape) {
 }
 
 var textDatas = {
-    "total": 9,
+    "total": 10,
     "rows": [
         {"name": "id", "value": "", "group": "ID Settings"},
         {"name": "type", "value": "", "group": "ID Settings"},
@@ -278,7 +278,8 @@ var textDatas = {
         {"name": "height", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "text", "value": "", "group": "Style", "editor": "textarea"},
         {"name": "fontSize", "value": "", "group": "Style", "editor": "numberbox"},
-        {"name": "fontColor", "value": "", "group": "Style", "editor": "text"}
+        {"name": "fontColor", "value": "", "group": "Style", "editor": "text"},
+        {"name": "backgroundColor", "value": "", "group": "Style", "editor": "text"}
     ]
 };
 
@@ -314,10 +315,13 @@ function setTextDatas(shape) {
                     shape.setText(value);
                     break;
                 case 7:
-                    shape.setStyle(shape.fontColor, value);
+                    shape.setStyle(shape.fontColor, value,shape.backgroundColor);
                     break;
                 case 8:
-                    shape.setStyle(value,shape.fontSize);
+                    shape.setStyle(value,shape.fontSize,shape.backgroundColor);
+                    break;
+                case 9:
+                    shape.setStyle(shape.fontColor,shape.fontSize,value);
                     break;
             }
             screen.reDraw();

@@ -9,6 +9,7 @@ function Text() {
     this.text=[];
     this.font = '';
     this.fontColor = '#000000';
+    this.backgroundColor='#ffffff';
     this.fontSize = 14;
 }
 
@@ -16,10 +17,11 @@ Text.prototype = new Shape();
 Text.prototype.constructor = Text;
 Text.prototype.draw = function () {
     cxt.save();
+    cxt.fillStyle=this.backgroundColor;
+    cxt.fillRect(this.startX,this.startY,this.width,this.height);
+
     cxt.textBaseline = 'top';
     cxt.fillStyle = this.fontColor;
-    // cxt.strokeStyle=this.fontColor;
-    // cxt.font='italic small-caps bold 20px arial';
     cxt.font = 'normal normal ' + this.fontSize + 'px arial';
     for (var i = 0, len = this.text.length; i < len; i++) {
         var obj = this.text[i];
@@ -42,9 +44,10 @@ Text.prototype.setText = function (text) {
     this.measure();
     return this;
 };
-Text.prototype.setStyle = function (fontColor, fontSize) {
+Text.prototype.setStyle = function (fontColor, fontSize,backgroundColor) {
     this.fontColor = fontColor;
     this.fontSize = fontSize;
+    this.backgroundColor = backgroundColor;
     this.measure();
     return this;
 };

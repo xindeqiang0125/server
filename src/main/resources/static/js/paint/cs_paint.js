@@ -86,16 +86,29 @@ var screen = {
 };
 
 function invertColor(color) {
-    var r=parseInt(color.substr(1,2),16);
-    var g=parseInt(color.substr(3,2),16);
-    var b=parseInt(color.substr(5,2),16);
-    r = (255-r).toString(16);
-    g = (255-g).toString(16);
-    b = (255-b).toString(16);
-    if (r.length==1) r='0'+r;
-    if (g.length==1) g='0'+g;
-    if (b.length==1) b='0'+b;
-    return '#'+r+g+b;
+    // console.log(color.substr(0,1));
+    if (color.substr(0,1)=='#'){
+        var r=parseInt(color.substr(1,2),16);
+        var g=parseInt(color.substr(3,2),16);
+        var b=parseInt(color.substr(5,2),16);
+        r = (255-r).toString(16);
+        g = (255-g).toString(16);
+        b = (255-b).toString(16);
+        if (r.length==1) r='0'+r;
+        if (g.length==1) g='0'+g;
+        if (b.length==1) b='0'+b;
+        return '#'+r+g+b;
+    }else if (color.substr(0,4).toLowerCase()=='rgba'){
+        color=color.substring(color.indexOf('(')+1,color.indexOf(')'));
+        var split = color.split(',');
+        split[0]=255-parseInt(split[0]);
+        split[1]=255-parseInt(split[1]);
+        split[2]=255-parseInt(split[2]);
+        split[3]=1;
+        var r = 'rgba('+split[0]+','+split[1]+','+split[2]+','+split[3]+')';
+        return r;
+    }
+
 };
 //<editor-fold desc="初始化控件">
 $('#cspaint_propertygrid').propertygrid({
@@ -107,6 +120,7 @@ $('#cspaint_propertygrid').propertygrid({
             return 'background-color:'+row.value+';color:'+invertColor(row.value);
         }
     },
+    editorHeight:90,
     data: {
         "total": 4, "rows": [
             {"name": "ID", "value": "Bill Smith", "group": "ID Settings", "editor": "text"},
@@ -165,7 +179,7 @@ function initPage() {
     var bodyHeight = document.body.offsetHeight;
     var bodyWidth = document.body.offsetWidth;
     var menuHeight = x('cspaint_menu').offsetHeight;
-    var propertygridContainerWidth = 200;
+    var propertygridContainerWidth = 300;
     x('propertygrid_container').style.height = (bodyHeight - menuHeight) + 'px';
     x('propertygrid_container').style.width = propertygridContainerWidth + 'px';
     x('canvas_container').style.height = (bodyHeight - menuHeight) + 'px';

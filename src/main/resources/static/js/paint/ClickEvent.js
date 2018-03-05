@@ -324,7 +324,7 @@ function addLineArrow() {
 
 function addText() {
     var text = new Text();
-    text.setStyle('#0000ff',23).setText('qqq辛德强\nAAA\n得分');
+    text.setStyle('#0000ff',23,'rgba(255,255,255,0)').setText('qqq辛德强\nAAA\n得分');
     screen.addShape(text);
     screen.reDraw();
 }
