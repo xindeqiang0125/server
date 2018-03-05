@@ -14,6 +14,8 @@ public class XItem {
     private Boolean active;
     @Column(length = 16,nullable = false)
     private String accessPath;
+    @Column(length = 128)
+    private String notes;
     @Column(length = 8,nullable = false)
     private String type;
     private Double min;
@@ -113,6 +115,14 @@ public class XItem {
 
     public void setGroup(XGroup group) {
         this.group = group;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override

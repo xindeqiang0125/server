@@ -25,6 +25,7 @@
             <option value="false">false</option>
         </select></div>
         <div><input id="item_accessPath" name="accessPath" data-options="label: 'AccessPath:'"/></div>
+        <div><input id="item_notes" name="notes" data-options="label: 'Notes:'"/></div>
         <div><select id="item_type" name="type" data-options="label: 'Type:',required:true">
             <option value="DOUBLE">DOUBLE</option>
             <option value="INTEGER">INTEGER</option>
@@ -68,10 +69,16 @@
 
 
 
-    $('#item_id,#item_itemName,#item_accessPath,#item_unit').textbox({
+    $('#item_id,#item_itemName,#item_accessPath,#item_notes,#item_unit').textbox({
         width:500,
         height:30,
         labelWidth:150
+    });
+    $('#item_notes').textbox({
+        width:500,
+        height:80,
+        labelWidth:150,
+        multiline:true
     });
     $('#item_min,#item_max,#item_normal').numberbox({
         width:500,
@@ -98,6 +105,7 @@
             {field:'itemName',title:'ItemName',width:150,align:'center'},
             {field:'active',title:'Active',width:100,align:'center'},
             {field:'accessPath',title:'AccessPath',width:100,align:'center'},
+            {field:'notes',title:'Notes',width:100,align:'center'},
             {field:'type',title:'Type',width:100,align:'center'},
             {field:'min',title:'ItemMin',width:60,align:'center'},
             {field:'max',title:'ItemMax',width:60,align:'center'},
@@ -113,6 +121,7 @@
             $('#item_unit').textbox('setValue',row.unit);
             $('#item_group').combobox('setValue',row.group==null?null:row.group.id);
             $('#item_accessPath').textbox('setValue',row.accessPath);
+            $('#item_notes').textbox('setValue',row.notes);
             $('#item_active').combobox('setValue',row.active);
             $('#item_itemName').textbox('setValue',row.itemName);
             $('#item_max').numberbox('setValue',row.max);

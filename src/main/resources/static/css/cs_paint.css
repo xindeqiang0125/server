@@ -11,3 +11,17 @@ html,body{
 /*#cspaint_cavanas{*/
     /*margin: 0px;*/
 /*}*/
+#cfg_dialog .label{
+    font-size: 20px;
+    color: #0000FF;
+    margin-right: 5px;
+}
+#cfg_dialog .value{
+    font-size: 20px;
+    color: #ff25bb;
+    margin-right: 10px;
+}
+#cfg_dialog .tip{
+    font-size: 20px;
+    color: #ff0c13;
+}

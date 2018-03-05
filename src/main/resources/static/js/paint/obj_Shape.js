@@ -9,6 +9,9 @@ function Shape() {
         }
         changePropertyGridDatas(selectedShapeGroup.shapeList[0]);
     };
+    this.onDoubleClick=function (e) {
+        openCfgDialog(this);
+    };
 
     this.move=function (moveX, moveY) {
         this.startX += moveX;

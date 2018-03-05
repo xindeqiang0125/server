@@ -42,7 +42,8 @@
 </div>
 <!--画布-->
 <div id="canvas_container" tabindex="0" style="display: inline-block;float: left;background-color: #0E2D5F">
-    <div id="cspaint_canvas_panel" class="easyui-panel" style="padding: 0px;background-color: #666666;position: absolute">
+    <div id="cspaint_canvas_panel" class="easyui-panel"
+         style="padding: 0px;background-color: #666666;position: absolute">
         <canvas id="cspaint_canvas"
                 style="border: dashed 4px #aaaaaa;background-color: #eeeeee;
                         position: inherit;z-index: 1"></canvas>
@@ -82,6 +83,33 @@
     <div onclick="selectAll()">全选</div>
 </div>
 
+<!--组态对话框-->
+<div id="cfg_dialog">
+    <div>
+        <span class="label">元素ID</span><span id="cfg_shapeId" class="value"></span>
+        <span class="label">元素类型</span><span id="cfg_shapeType" class="value"></span>
+        <span class="tip">操作提示：双击条目删除</span>
+    </div>
+    <div style="height: 200px;background-color: #2984a4">
+        <table id="cfg_datagrid"></table>
+    </div>
+    <div>
+        <span>测点</span><input id="cfg_point" style="width: 50px;background-color: #2984a4"/>
+        <input id="cfg_action" />
+        <input id="cfg_condition"/>
+        <button class="icon-add" style="width: 30px;height: 30px" onclick="addCfg()"></button>
+    </div>
+</div>
+<div id="searchItem_dialog">
+    <input id="searchItem_groupId" class="easyui-combobox" name="groupId" data-options="url:'/manage/getgroups',valueField:'id',textField:'groupName',
+    width:120,label: 'Group:',labelAlign:'right',labelWidth:45,panelHeight:'auto',panelMaxHeight:100,editable:false"/>
+    <input id="searchItem_itemName" class="easyui-textbox" name="itemName" data-options="prompt:'ItemName',buttonIcon:'icon-search',buttonText:'搜索'"/>
+
+    <div style="height: 300px">
+        <table id="searchItem_datagrid"></table>
+    </div>
+</div>
+
 
 <link rel="stylesheet" type="text/css" href="/css/cs_paint.css"/>
 <script type="text/javascript" src="/js/paint/cs_paint.js"></script>
@@ -96,5 +124,7 @@
 <script type="text/javascript" src="/js/paint/obj_Line.js"></script>
 <script type="text/javascript" src="/js/paint/obj_LineArrow.js"></script>
 <script type="text/javascript" src="/js/paint/obj_Text.js"></script>
+<script type="text/javascript" src="/js/paint/cfg_Configuration.js"></script>
+<script type="text/javascript" src="/js/paint/cfg_Dialog.js"></script>
 </body>
 </html>

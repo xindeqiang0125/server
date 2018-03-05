@@ -19,6 +19,13 @@ var shapeId = {
         return this.id;
     }
 };
+var cfgId = {
+    id: 0,
+    next: function () {
+        this.id++;
+        return this.id;
+    }
+};
 /**
  * screen静态对象
  * @type {{shapeList: Array, configurationList: Array, addShape: screen.addShape, deleteShape: screen.deleteShape, addConfiguration: screen.addConfiguration, deleteConfiguration: screen.deleteConfiguration, clear: screen.clear, toBottom: screen.toBottom, toTop: screen.toTop, toUpper: screen.toUpper, toLower: screen.toLower, contains: screen.contains, reDraw: screen.reDraw}}
@@ -79,14 +86,10 @@ var screen = {
         for (var i = 0; this.shapeList.length > i; i++) {
             this.shapeList[i].draw();
         }
-        // if (!selectedShapeGroup.isEmpty()) {
-        //     selectedShapeGroup.drawSelectedBorder();
-        // }
     }
 };
 
 function invertColor(color) {
-    // console.log(color.substr(0,1));
     if (color.substr(0,1)=='#'){
         var r=parseInt(color.substr(1,2),16);
         var g=parseInt(color.substr(3,2),16);
@@ -183,7 +186,7 @@ function initPage() {
     x('propertygrid_container').style.height = (bodyHeight - menuHeight) + 'px';
     x('propertygrid_container').style.width = propertygridContainerWidth + 'px';
     x('canvas_container').style.height = (bodyHeight - menuHeight) + 'px';
-    x('canvas_container').style.width = (bodyWidth - propertygridContainerWidth) + 'px';
+    x('canvas_container').style.width = (bodyWidth - propertygridContainerWidth-20) + 'px';
     $('#cspaint_propertygrid').propertygrid({fit: true});
     $('#cspaint_canvas_panel').panel({fit: true});
 }
@@ -237,6 +240,9 @@ x('cspaint_canvas_select').onmouseout = function (e) {
 };
 x('cspaint_canvas_select').oncontextmenu = function (e) {
     x('cspaint_canvas').oncontextmenu(e)
+};
+x('cspaint_canvas_select').ondblclick = function (e) {
+    x('cspaint_canvas').ondblclick(e)
 };
 
 function isReSizeSE(e) {
@@ -335,7 +341,7 @@ x('cspaint_canvas').onmousemove = function (e) {
             mouseDownX = e.offsetX;
             mouseDownY = e.offsetY;
             screen.reDraw();
-        } else if ('selectByMouseDrag'==moveOrResize){
+        } else if ('selectByMouseDrag'==moveOrResize&&e.offsetX != mouseDownX){
             cxtSel.clearRect(0, 0, canvas2.width, canvas2.height);
             cxtSel.save();
             cxtSel.strokeStyle = 'rgba(0,0,0,1)';
@@ -421,6 +427,12 @@ x('cspaint_canvas').onclick = function (e) {
 x('cspaint_canvas').oncontextmenu = function (e) {
     e.preventDefault();
     $('#context_menu').menu('show', {left: e.clientX, top: e.clientY});
+};
+x('cspaint_canvas').ondblclick=function (e) {
+    var clickedShape = getClickedShape(e.offsetX, e.offsetY);
+    if (clickedShape != null){
+        clickedShape.onDoubleClick(e);
+    }
 };
 
 function test() {
