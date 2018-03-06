@@ -7,7 +7,7 @@ var shapeType;
 var selectedShapeGroup;
 var clipboard;
 var moveOrResize = '';
-var noOnClick=false;
+var noOnClick = false;
 /**
  * ShapeId生成器
  * @type {{id: number, next: shapeId.next}}
@@ -26,6 +26,20 @@ var cfgId = {
         return this.id;
     }
 };
+
+function deleteRelatedCfgs(shape) {
+    var cfgs = getCfgsByShapeId(shape.id);
+    for (var i = 0, len = cfgs.length; i < len; i++) {
+        var obj = cfgs[i];
+        screen.deleteConfiguration(obj);
+    }
+    if (shape.type == 'group') {
+        for (var i = 0, len = shape.shapeList.length; i < len; i++) {
+            deleteRelatedCfgs(shape.shapeList[i]);
+        }
+    }
+}
+
 /**
  * screen静态对象
  * @type {{shapeList: Array, configurationList: Array, addShape: screen.addShape, deleteShape: screen.deleteShape, addConfiguration: screen.addConfiguration, deleteConfiguration: screen.deleteConfiguration, clear: screen.clear, toBottom: screen.toBottom, toTop: screen.toTop, toUpper: screen.toUpper, toLower: screen.toLower, contains: screen.contains, reDraw: screen.reDraw}}
@@ -39,6 +53,8 @@ var screen = {
     deleteShape: function (shape) {
         var start = $.inArray(shape, this.shapeList);
         if (-1 != start) this.shapeList.splice(start, 1);
+        //删掉相关联的组态信息
+        deleteRelatedCfgs(shape);
     },
     addConfiguration: function (configuration) {
         this.configurationList.push(configuration);
@@ -90,25 +106,25 @@ var screen = {
 };
 
 function invertColor(color) {
-    if (color.substr(0,1)=='#'){
-        var r=parseInt(color.substr(1,2),16);
-        var g=parseInt(color.substr(3,2),16);
-        var b=parseInt(color.substr(5,2),16);
-        r = (255-r).toString(16);
-        g = (255-g).toString(16);
-        b = (255-b).toString(16);
-        if (r.length==1) r='0'+r;
-        if (g.length==1) g='0'+g;
-        if (b.length==1) b='0'+b;
-        return '#'+r+g+b;
-    }else if (color.substr(0,4).toLowerCase()=='rgba'){
-        color=color.substring(color.indexOf('(')+1,color.indexOf(')'));
+    if (color.substr(0, 1) == '#') {
+        var r = parseInt(color.substr(1, 2), 16);
+        var g = parseInt(color.substr(3, 2), 16);
+        var b = parseInt(color.substr(5, 2), 16);
+        r = (255 - r).toString(16);
+        g = (255 - g).toString(16);
+        b = (255 - b).toString(16);
+        if (r.length == 1) r = '0' + r;
+        if (g.length == 1) g = '0' + g;
+        if (b.length == 1) b = '0' + b;
+        return '#' + r + g + b;
+    } else if (color.substr(0, 4).toLowerCase() == 'rgba') {
+        color = color.substring(color.indexOf('(') + 1, color.indexOf(')'));
         var split = color.split(',');
-        split[0]=255-parseInt(split[0]);
-        split[1]=255-parseInt(split[1]);
-        split[2]=255-parseInt(split[2]);
-        split[3]=1;
-        var r = 'rgba('+split[0]+','+split[1]+','+split[2]+','+split[3]+')';
+        split[0] = 255 - parseInt(split[0]);
+        split[1] = 255 - parseInt(split[1]);
+        split[2] = 255 - parseInt(split[2]);
+        split[3] = 1;
+        var r = 'rgba(' + split[0] + ',' + split[1] + ',' + split[2] + ',' + split[3] + ')';
         return r;
     }
 
@@ -118,12 +134,12 @@ $('#cspaint_propertygrid').propertygrid({
     showGroup: true,
     scrollbarSize: 0,
     fit: true,
-    rowStyler:function (index,row) {
-        if (row.name.indexOf('Color')!=-1) {
-            return 'background-color:'+row.value+';color:'+invertColor(row.value);
+    rowStyler: function (index, row) {
+        if (row.name.indexOf('Color') != -1) {
+            return 'background-color:' + row.value + ';color:' + invertColor(row.value);
         }
     },
-    editorHeight:90,
+    editorHeight: 90,
     data: {
         "total": 4, "rows": [
             {"name": "ID", "value": "Bill Smith", "group": "ID Settings", "editor": "text"},
@@ -186,7 +202,7 @@ function initPage() {
     x('propertygrid_container').style.height = (bodyHeight - menuHeight) + 'px';
     x('propertygrid_container').style.width = propertygridContainerWidth + 'px';
     x('canvas_container').style.height = (bodyHeight - menuHeight) + 'px';
-    x('canvas_container').style.width = (bodyWidth - propertygridContainerWidth-20) + 'px';
+    x('canvas_container').style.width = (bodyWidth - propertygridContainerWidth - 20) + 'px';
     $('#cspaint_propertygrid').propertygrid({fit: true});
     $('#cspaint_canvas_panel').panel({fit: true});
 }
@@ -316,7 +332,7 @@ x('cspaint_canvas').onmousedown = function (e) {
         else if (isReSizeNE(e)) moveOrResize = 'ne-resize';
         else if (isReSizeS(e)) moveOrResize = 's-resize';
         else if (isReSizeE(e)) moveOrResize = 'e-resize';
-        else moveOrResize='selectByMouseDrag';
+        else moveOrResize = 'selectByMouseDrag';
 
         mouseDownX = e.offsetX;
         mouseDownY = e.offsetY;
@@ -341,16 +357,16 @@ x('cspaint_canvas').onmousemove = function (e) {
             mouseDownX = e.offsetX;
             mouseDownY = e.offsetY;
             screen.reDraw();
-        } else if ('selectByMouseDrag'==moveOrResize&&e.offsetX != mouseDownX){
+        } else if ('selectByMouseDrag' == moveOrResize && e.offsetX != mouseDownX) {
             cxtSel.clearRect(0, 0, canvas2.width, canvas2.height);
             cxtSel.save();
             cxtSel.strokeStyle = 'rgba(0,0,0,1)';
             cxtSel.lineWidth = 2;
             cxtSel.lineCap = 'square';
             cxtSel.lineJoin = 'square';
-            cxtSel.strokeRect(mouseDownX,mouseDownY,e.offsetX-mouseDownX,e.offsetY-mouseDownY);
+            cxtSel.strokeRect(mouseDownX, mouseDownY, e.offsetX - mouseDownX, e.offsetY - mouseDownY);
             cxtSel.restore();
-            noOnClick=true;
+            noOnClick = true;
         } else if ('' != moveOrResize) {
             var zero = {x: 0, y: 0};
             var scaleX = 1, scaleY = 1;
@@ -387,8 +403,8 @@ x('cspaint_canvas').onmousemove = function (e) {
                 zero.x = selectedShapeGroup.startX;
                 scaleX = (e.offsetX - zero.x) / (mouseDownX - zero.x);
             }
-            if (e.ctrlKey&&
-                (moveOrResize=='nw-resize'||moveOrResize=='sw-resize'||moveOrResize=='ne-resize'||moveOrResize=='se-resize')
+            if (e.ctrlKey &&
+                (moveOrResize == 'nw-resize' || moveOrResize == 'sw-resize' || moveOrResize == 'ne-resize' || moveOrResize == 'se-resize')
             ) {
                 scaleX = scaleX / Math.abs(scaleX) * (Math.abs(scaleX) + Math.abs(scaleY)) / 2;
                 scaleY = scaleX;
@@ -401,8 +417,8 @@ x('cspaint_canvas').onmousemove = function (e) {
     }
 };
 x('cspaint_canvas').onmouseup = function (e) {
-    if (noOnClick){
-        selectByMouseDrag(mouseDownX,mouseDownY,e.offsetX-mouseDownX,e.offsetY-mouseDownY);
+    if (noOnClick) {
+        selectByMouseDrag(mouseDownX, mouseDownY, e.offsetX - mouseDownX, e.offsetY - mouseDownY);
     }
     moveOrResize = '';
     selectedShapeGroup.correctSize();
@@ -411,7 +427,7 @@ x('cspaint_canvas').onmouseout = function (e) {
     this.onmouseup(e)
 };
 x('cspaint_canvas').onclick = function (e) {
-    if (!noOnClick){
+    if (!noOnClick) {
         var clickedShape = getClickedShape(e.offsetX, e.offsetY);
         if (clickedShape == null) {
             if (!e.ctrlKey) {
@@ -422,15 +438,15 @@ x('cspaint_canvas').onclick = function (e) {
         }
         selectedShapeGroup.drawBorder();
     }
-    noOnClick=false;
+    noOnClick = false;
 };
 x('cspaint_canvas').oncontextmenu = function (e) {
     e.preventDefault();
     $('#context_menu').menu('show', {left: e.clientX, top: e.clientY});
 };
-x('cspaint_canvas').ondblclick=function (e) {
+x('cspaint_canvas').ondblclick = function (e) {
     var clickedShape = getClickedShape(e.offsetX, e.offsetY);
-    if (clickedShape != null){
+    if (clickedShape != null) {
         clickedShape.onDoubleClick(e);
     }
 };
@@ -438,20 +454,35 @@ x('cspaint_canvas').ondblclick=function (e) {
 function test() {
     screen.clear();
     var polygon1 = new Polygon();
-    polygon1.setStyle(4,'#0000ff','#00ff00').setPoints([{x:50,y:50},{x:80,y:50},{x:80,y:80},{x:50,y:80}])
-        ;
+    polygon1.setStyle(4, '#0000ff', '#00ff00').setPoints([{x: 50, y: 50}, {x: 80, y: 50}, {x: 80, y: 80}, {
+        x: 50,
+        y: 80
+    }])
+    ;
     var polygon2 = new Polygon();
-    polygon2.setStyle(2,'#00aaff','#aaff00').setPoints([{x:100,y:50},{x:140,y:50},{x:140,y:80},{x:100,y:80}])
-        ;
+    polygon2.setStyle(2, '#00aaff', '#aaff00').setPoints([{x: 100, y: 50}, {x: 140, y: 50}, {x: 140, y: 80}, {
+        x: 100,
+        y: 80
+    }])
+    ;
     var polygon3 = new Polygon();
-    polygon3.setStyle(6,'#ffffff','#000000').setPoints([{x:50,y:100},{x:80,y:100},{x:80,y:140},{x:50,y:140}])
-        ;
+    polygon3.setStyle(6, '#ffffff', '#000000').setPoints([{x: 50, y: 100}, {x: 80, y: 100}, {x: 80, y: 140}, {
+        x: 50,
+        y: 140
+    }])
+    ;
     var polygon4 = new Polygon();
-    polygon4.setStyle(8,'#ff00ff','#ffff00').setPoints([{x:150,y:50},{x:210,y:50},{x:210,y:80},{x:150,y:80}])
-        ;
+    polygon4.setStyle(8, '#ff00ff', '#ffff00').setPoints([{x: 150, y: 50}, {x: 210, y: 50}, {x: 210, y: 80}, {
+        x: 150,
+        y: 80
+    }])
+    ;
     var polygon5 = new Polygon();
-    polygon5.setStyle(10,'#0f0fff','#f0ff0f').setPoints([{x:50,y:150},{x:80,y:150},{x:80,y:210},{x:50,y:210}])
-        ;
+    polygon5.setStyle(10, '#0f0fff', '#f0ff0f').setPoints([{x: 50, y: 150}, {x: 80, y: 150}, {x: 80, y: 210}, {
+        x: 50,
+        y: 210
+    }])
+    ;
     var shapeGroup = new ShapeGroup();
     var shapeGroup2 = new ShapeGroup();
     shapeGroup.add(polygon3);
