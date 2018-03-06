@@ -24,12 +24,9 @@ Gallery.prototype.add = function (name, shape) {
     this.gallery.push(obj);
 };
 Gallery.prototype.delete = function (name) {
-    console.log(name);
     var newVar = this.get(name);
-    console.log(newVar);
     if (newVar != null) {
         var start = $.inArray(newVar, this.gallery);
-        console.log(start);
         if (-1 != start) this.gallery.splice(start, 1);
     }
 };

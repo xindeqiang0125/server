@@ -292,7 +292,6 @@ function shapeJsonToObject(obj) {
     }
     return shape;
 }
-
 function loadShapesToMemory(shapeList) {
     for (var i = 0, len = shapeList.length; i < len; i++) {
         var obj = shapeList[i];
