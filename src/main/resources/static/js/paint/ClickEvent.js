@@ -195,17 +195,16 @@ function paste() {
     }
 }
 
-
 function newFile() {
     shapeId.id=0;
     cfgId.id=0;
     screen.clear();
     screen.reDraw();
 }
+
 function openFile(files) {
     $('#openfile').click();
 }
-
 function fileChange() {
     var file = x('openfile').files[0];
     var fileReader = new FileReader();
@@ -221,7 +220,6 @@ function fileChange() {
     };
     fileReader.readAsText(file);
 }
-
 function loadShapeGroup(shapeGroup) {
     var res=new ShapeGroup();
     res.id=shapeGroup.id;
@@ -261,41 +259,44 @@ function loadShapeGroup(shapeGroup) {
     }
     return res;
 }
+function shapeJsonToObject(obj) {
+    var shape;
+    switch (obj.type) {
+        case 'group':
+            shape = loadShapeGroup(obj);
+            break;
+        case 'rect':
+            shape = new Rect();
+            for (var j in obj) shape[j] = obj[j];
+            break;
+        case 'polygon':
+            shape = new Polygon();
+            for (var j in obj) shape[j] = obj[j];
+            break;
+        case 'circle':
+            shape = new Circle();
+            for (var j in obj) shape[j] = obj[j];
+            break;
+        case 'line':
+            shape = new Line();
+            for (var j in obj) shape[j] = obj[j];
+            break;
+        case 'linearrow':
+            shape = new LineArrow();
+            for (var j in obj) shape[j] = obj[j];
+            break;
+        case 'text':
+            shape = new Text();
+            for (var j in obj) shape[j] = obj[j];
+            break;
+    }
+    return shape;
+}
 
 function loadShapesToMemory(shapeList) {
     for (var i = 0, len = shapeList.length; i < len; i++) {
         var obj = shapeList[i];
-        var shape;
-
-        switch (obj.type){
-            case 'group':
-                shape=loadShapeGroup(obj);
-                break;
-            case 'rect':
-                shape=new Rect();
-                for (var j in obj) shape[j]=obj[j];
-                break;
-            case 'polygon':
-                shape=new Polygon();
-                for (var j in obj) shape[j]=obj[j];
-                break;
-            case 'circle':
-                shape=new Circle();
-                for (var j in obj) shape[j]=obj[j];
-                break;
-            case 'line':
-                shape=new Line();
-                for (var j in obj) shape[j]=obj[j];
-                break;
-            case 'linearrow':
-                shape=new LineArrow();
-                for (var j in obj) shape[j]=obj[j];
-                break;
-            case 'text':
-                shape=new Text();
-                for (var j in obj) shape[j]=obj[j];
-                break;
-        }
+        var shape = shapeJsonToObject(obj);
         screen.addShape(shape);
     }
 }
@@ -315,11 +316,9 @@ function saveFile() {
     file.screen=screen;
     export_raw('file.xcs',JSON.stringify(file))
 }
-
 function saveAsFile() {
     saveFile();
 }
-
 function fake_click(obj) {
     var ev = document.createEvent("MouseEvents");
     ev.initMouseEvent(
@@ -328,7 +327,6 @@ function fake_click(obj) {
     );
     obj.dispatchEvent(ev);
 }
-
 //name-文件名；data-要保存的字符串。
 function export_raw(name, data) {
     var urlObject = window.URL || window.webkitURL || window;
@@ -404,4 +402,57 @@ function addText() {
     text.setStyle('#0000ff',23,'rgba(255,255,255,0)').setText('qqq辛德强\nAAA\n得分');
     screen.addShape(text);
     screen.reDraw();
+}
+
+function showGalleryPanel() {
+    $("#gallery_panel").show();
+}
+
+function hideGalleryPanel() {
+    $("#gallery_panel").hide();
+}
+
+function galleryFileChange() {
+    var file = x('galleryfile').files[0];
+    gallery.loadFromFile(file,function () {
+        updateGalleryPanel();
+    });
+}
+
+function saveGallery() {
+    gallery.saveToFile();
+}
+
+function addShapeToGallery(name) {
+    if (selectedShapeGroup.shapeList.length==1){
+        $('#addGallery_dialog').dialog('open');
+    }
+}
+function updateGalleryPanel() {
+    $('#gallery_panel span').remove();
+    for (var i = 0, len = gallery.gallery.length; i < len; i++) {
+        var obj = gallery.gallery[i];
+        var span = document.createElement("span");
+        span.innerText=obj.name;
+        span.onclick=function () {
+            var shape = gallery.get(this.innerText).shape;
+            shape=deepCopy(shape);
+            shape.setNewId();
+            screen.addShape(shape);
+            screen.reDraw();
+        };
+        span.oncontextmenu=function (e) {
+            galleryName=this.innerText;
+            e.preventDefault();
+            $('#gallery_menu').menu('show', {left: e.clientX, top: e.clientY});
+        };
+
+        $('#gallery_panel').append(span);
+    }
+
+}
+function deleteShapeFromGallery() {
+    gallery.delete(galleryName);
+    updateGalleryPanel();
+    galleryName=null;
 }

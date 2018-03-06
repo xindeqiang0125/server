@@ -5,9 +5,11 @@ var cxt = canvas.getContext("2d");
 var cxtSel = canvas2.getContext("2d");
 var shapeType;
 var selectedShapeGroup;
+var gallery;
 var clipboard;
 var moveOrResize = '';
 var noOnClick = false;
+var galleryName;
 /**
  * ShapeId生成器
  * @type {{id: number, next: shapeId.next}}
@@ -188,6 +190,34 @@ $('#canvas_height').numberbox({
 
 $('#context_menu').menu({});
 
+$('#addGallery_dialog').dialog({
+    width:160,
+    modal: true,
+    title: '添加图库',
+    closed: true,
+    buttons: [{
+        text: '确定',
+        iconCls: 'icon-ok',
+        handler: function () {
+            var name=$('#gallery_name').textbox('getValue');
+            gallery.add(name,selectedShapeGroup.shapeList[0]);
+            updateGalleryPanel();
+            $('#addGallery_dialog').dialog('close');
+        }
+    }, {
+        text: '取消',
+        iconCls: 'icon-cancel',
+        handler: function () {
+            $('#addGallery_dialog').dialog('close');
+        }
+    }]
+});
+$('#gallery_name').textbox({
+    width:150,
+    label: '名称：',
+    labelWidth:50,
+    required:true
+});
 //</editor-fold>
 
 function x(id) {
@@ -322,6 +352,8 @@ function isMove(e) {
 }
 
 x('cspaint_canvas').onmousedown = function (e) {
+    hideGalleryPanel();
+
     if (1 == e.buttons) {
         if (isMove(e)) moveOrResize = 'move';
         else if (isReSizeNW(e)) moveOrResize = 'nw-resize';
@@ -502,6 +534,7 @@ function test() {
 
 $(function () {
     selectedShapeGroup = new ShapeGroup();
+    gallery=new Gallery();
     initPage();
     setCanvasSize();
 

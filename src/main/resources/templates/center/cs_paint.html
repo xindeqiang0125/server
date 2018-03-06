@@ -25,7 +25,7 @@
         <div onclick="saveAsFile()" data-options="iconCls:'icon-save'">另存为</div>
     </div>
 
-    <div id="shapes" style="width: 60%;display: inline-block;float: right">
+    <div id="shapes" style="width: 60%;display: inline-block;margin-left: 100px">
         <!--<a id="rect" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">□</a>-->
         <span onclick="addRect()">矩形</span>
         <span onclick="addCircle()">圆形</span>
@@ -33,6 +33,15 @@
         <span onclick="addLine()">直线</span>
         <span onclick="addLineArrow()">箭头</span>
         <span onclick="addText()">文字</span>
+        <div style="display: inline-block;" onmouseenter="showGalleryPanel()">
+            <span >图库</span>
+            <!--图库面板-->
+            <div id="gallery_panel" style="position:absolute;z-index: 99999;display: none;width: 300px;height: 50px;background-color: #aeff72">
+                <input id="galleryfile" type="file" onchange="galleryFileChange()"/>
+                <button class="icon-save" onclick="saveGallery()" style="width: 16px;height: 16px"></button>
+                <br/>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -60,6 +69,10 @@
     <div><input id="canvas_height" style="width:200px"/></div>
 </div>
 
+<!--图库右键菜单-->
+<div id="gallery_menu" class="easyui-menu" style="width:150px">
+    <div onclick="deleteShapeFromGallery()" data-options="iconCls:'icon-remove'">删除</div>
+</div>
 <!--右键菜单-->
 <div id="context_menu" class="easyui-menu" style="width:150px">
     <div onclick="makeGroup()" data-options="iconCls:'icon-redo'">组合</div>
@@ -82,6 +95,7 @@
     <div class="menu-sep"></div>
     <div onclick="del()" data-options="iconCls:'icon-remove'">删除</div>
     <div onclick="selectAll()">全选</div>
+    <div onclick="addShapeToGallery()">添加到图库</div>
 </div>
 
 <!--组态对话框-->
@@ -101,6 +115,7 @@
         <button class="icon-add" style="width: 30px;height: 30px" onclick="addCfg()"></button>
     </div>
 </div>
+<!--测点搜索对话框-->
 <div id="searchItem_dialog">
     <input id="searchItem_groupId" class="easyui-combobox" name="groupId" data-options="url:'/manage/getgroups',valueField:'id',textField:'groupName',
     width:120,label: 'Group:',labelAlign:'right',labelWidth:45,panelHeight:'auto',panelMaxHeight:100,editable:false"/>
@@ -110,7 +125,10 @@
         <table id="searchItem_datagrid"></table>
     </div>
 </div>
-
+<!--添加图库对话框-->
+<div id="addGallery_dialog">
+    <input id="gallery_name" class="easyui-textbox" data-options=""/>
+</div>
 
 <link rel="stylesheet" type="text/css" href="/css/cs_paint.css"/>
 <script type="text/javascript" src="/js/paint/cs_paint.js"></script>
@@ -127,5 +145,6 @@
 <script type="text/javascript" src="/js/paint/obj_Text.js"></script>
 <script type="text/javascript" src="/js/paint/cfg_Configuration.js"></script>
 <script type="text/javascript" src="/js/paint/cfg_Dialog.js"></script>
+<script type="text/javascript" src="/js/paint/Gallery.js"></script>
 </body>
 </html>
