@@ -60,8 +60,9 @@ Line.prototype.setPoints = function (points) {
     return this;
 };
 Line.prototype.setStyle = function (lineWidth, lineColor) {
-    this.lineWidth = lineWidth;
+    this.lineWidth = parseInt(lineWidth);
     this.lineColor = lineColor;
+    this.setPoints(this.points);
     return this;
 };
 Line.prototype.setLineLength = function (lineLength) {

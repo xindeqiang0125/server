@@ -30,6 +30,7 @@ Text.prototype.draw = function () {
     cxt.restore();
 };
 Text.prototype.measure=function () {
+    this.width=0;this.height=0;
     cxt.save();
     cxt.font = 'normal normal ' + this.fontSize + 'px arial';
     for (var i = 0, len = this.text.length; i < len; i++) {

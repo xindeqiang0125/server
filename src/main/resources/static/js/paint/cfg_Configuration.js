@@ -1,7 +1,7 @@
 function Configuration(shapeId,itemId) {
     this.id=cfgId.next();
-    this.shapeId=shapeId;
-    this.itemId=itemId;
+    this.shapeId=parseInt(shapeId);
+    this.itemId=parseInt(itemId);
     this.detail='';
 }
 Configuration.prototype.setCfg=function (action,condition) {

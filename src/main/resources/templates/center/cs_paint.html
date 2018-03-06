@@ -10,7 +10,7 @@
     <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <body style="height: 100%">
-<!--<input id="savefile" type="file"/>-->
+<input id="openfile" type="file" onchange="fileChange()" style="display: none"/>
 <!--<a href="javascript:void(0)" id="aa">保存</a>-->
 <!--菜单-->
 <div id="cspaint_menu" style="border-bottom: 1px solid #2984a4">
@@ -19,9 +19,10 @@
     <div id="file_menu" style="width:150px;">
         <!--<div data-options="iconCls:'icon-undo'">Undo</div>-->
         <div onclick="openCanvasSizeDialog()">画布大小</div>
+        <div onclick="newFile()" data-options="iconCls:'icon-open'">新建</div>
         <div onclick="openFile()" data-options="iconCls:'icon-open'">打开</div>
         <div onclick="saveFile()" data-options="iconCls:'icon-save'">保存</div>
-        <div onclick="saveAsFile()" data-options="iconCls:'icon-undo'">另存为</div>
+        <div onclick="saveAsFile()" data-options="iconCls:'icon-save'">另存为</div>
     </div>
 
     <div id="shapes" style="width: 60%;display: inline-block;float: right">

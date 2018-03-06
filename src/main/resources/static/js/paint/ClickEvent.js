@@ -196,36 +196,128 @@ function paste() {
 }
 
 
+function newFile() {
+    shapeId.id=0;
+    cfgId.id=0;
+    screen.clear();
+    screen.reDraw();
+}
 function openFile(files) {
-    // $('#savefile').click(function () {
-    //
-    // });
-    var file = x('savefile').files[0];
+    $('#openfile').click();
+}
+
+function fileChange() {
+    var file = x('openfile').files[0];
     var fileReader = new FileReader();
     fileReader.onload=function (e) {
+        var file = JSON.parse(e.target.result);
         screen.clear();
-        var parse = JSON.parse(e.target.result);
+        loadShapesToMemory(file.screen.shapeList);
+        loadCfgsToMemory(file.screen.configurationList);
         screen.reDraw();
+        shapeId.id=file.shapeId.id;
+        cfgId.id=file.cfgId.id;
+        // console.log(screen);
     };
     fileReader.readAsText(file);
+}
 
-    // var b = document.execCommand('SaveAs');
-    // console.log(b);
+function loadShapeGroup(shapeGroup) {
+    var res=new ShapeGroup();
+    res.id=shapeGroup.id;
+    var shape;
+    for (var i = 0, len = shapeGroup.shapeList.length; i < len; i++) {
+        var obj = shapeGroup.shapeList[i];
+        switch (obj.type){
+            case 'group':
+                shape=loadShapeGroup(obj);
+                break;
+            case 'rect':
+                shape=new Rect();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'polygon':
+                shape=new Polygon();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'circle':
+                shape=new Circle();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'line':
+                shape=new Line();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'linearrow':
+                shape=new LineArrow();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'text':
+                shape=new Text();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+        }
+        res.add(shape);
+    }
+    return res;
+}
+
+function loadShapesToMemory(shapeList) {
+    for (var i = 0, len = shapeList.length; i < len; i++) {
+        var obj = shapeList[i];
+        var shape;
+
+        switch (obj.type){
+            case 'group':
+                shape=loadShapeGroup(obj);
+                break;
+            case 'rect':
+                shape=new Rect();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'polygon':
+                shape=new Polygon();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'circle':
+                shape=new Circle();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'line':
+                shape=new Line();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'linearrow':
+                shape=new LineArrow();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+            case 'text':
+                shape=new Text();
+                for (var j in obj) shape[j]=obj[j];
+                break;
+        }
+        screen.addShape(shape);
+    }
+}
+function loadCfgsToMemory(configurationList) {
+    for (var i = 0, len = configurationList.length; i < len; i++) {
+        var obj = configurationList[i];
+        var cfg = new Configuration();
+        for (var j in obj) cfg[j] = obj[j];
+        screen.addConfiguration(cfg);
+    }
 }
 
 function saveFile() {
-    // var event = new Event('build');
-    // event.ctrlKey=true;
-    // event.key='s';
-    // document.addEventListener('build',function (e) {
-    //     alert(12);
-    // });
-    // document.dispatchEvent(event);
-    // var window2 = window.open();
-    // window2.document.write(JSON.stringify(screen));
-    var isSupportDownload = 'download' in document.createElement('a');
-    console.log(isSupportDownload);
-    export_raw('111.asd',JSON.stringify(screen))
+    var file={};
+    file.shapeId=shapeId;
+    file.cfgId=cfgId;
+    file.screen=screen;
+    export_raw('file.xcs',JSON.stringify(file))
+}
+
+function saveAsFile() {
+    saveFile();
 }
 
 function fake_click(obj) {
@@ -241,28 +333,13 @@ function fake_click(obj) {
 function export_raw(name, data) {
     var urlObject = window.URL || window.webkitURL || window;
     var export_blob = new Blob([data],{type:'text/json'});
-    console.log(export_blob);
     var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
     save_link.href = urlObject.createObjectURL(export_blob);
-    console.log(save_link.href);
     save_link.download = name;
     // location.href=save_link;
     fake_click(save_link);
 }
-//点击按钮
 
-$('#aa').click(function() {
-    var data='要保存的文本';
-    export_raw('range.json', data);
-
-});
-
-
-
-
-function saveAsFile() {
-    
-}
 
 
 
