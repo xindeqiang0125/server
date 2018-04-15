@@ -5,7 +5,7 @@ function Configuration(shapeId,itemId) {
     this.detail='';
 }
 Configuration.prototype.setCfg=function (action,condition) {
-    this.detail=action+' when '+condition;
+    this.detail=action+condition;
 };
 function getCfgsByShapeId(shapeId) {
     var cfgs=[];

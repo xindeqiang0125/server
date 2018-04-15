@@ -107,8 +107,10 @@ var cfgActions = {
         {text: 'twinkle', value: 'twinkle'}
     ],
     rect: [
-        {text: 'width', value: 'width'},
-        {text: 'height', value: 'height'},
+        {text: 'width.left', value: 'width.left'},
+        {text: 'width.right', value: 'width.right'},
+        {text: 'height.top', value: 'height.top'},
+        {text: 'height.bottom', value: 'height.bottom'},
         {text: 'lineColor', value: 'lineColor'},
         {text: 'fillColor', value: 'fillColor'},
         {text: 'hide', value: 'hide'},
@@ -117,6 +119,10 @@ var cfgActions = {
     circle: [
         {text: 'a', value: 'a'},
         {text: 'b', value: 'b'},
+        {text: 'radius', value: 'radius'},
+        {text: 'radian', value: 'radian'},
+        {text: 'center.x', value: 'center.x'},
+        {text: 'center.y', value: 'center.y'},
         {text: 'lineColor', value: 'lineColor'},
         {text: 'fillColor', value: 'fillColor'},
         {text: 'hide', value: 'hide'},
@@ -129,18 +135,30 @@ var cfgActions = {
         {text: 'twinkle', value: 'twinkle'}
     ],
     line: [
+        {text: 'start.x', value: 'start.x'},
+        {text: 'start.y', value: 'start.y'},
+        {text: 'end.x', value: 'end.x'},
+        {text: 'end.y', value: 'end.y'},
         {text: 'lineColor', value: 'lineColor'},
-        {text: 'lineLength', value: 'lineLength'},
+        {text: 'lineLength.start', value: 'lineLength.start'},
+        {text: 'lineLength.end', value: 'lineLength.end'},
         {text: 'hide', value: 'hide'},
         {text: 'twinkle', value: 'twinkle'}
     ],
     linearrow: [
+        {text: 'start.x', value: 'start.x'},
+        {text: 'start.y', value: 'start.y'},
+        {text: 'end.x', value: 'end.x'},
+        {text: 'end.y', value: 'end.y'},
         {text: 'lineColor', value: 'lineColor'},
-        {text: 'lineLength', value: 'lineLength'},
+        {text: 'lineLength.start', value: 'lineLength.start'},
+        {text: 'lineLength.end', value: 'lineLength.end'},
         {text: 'hide', value: 'hide'},
         {text: 'twinkle', value: 'twinkle'}
     ],
     text: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'text', value: 'text'},
         {text: 'fontColor', value: 'fontColor'},
         {text: 'fontSize', value: 'fontSize'},
