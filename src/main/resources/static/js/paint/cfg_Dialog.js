@@ -103,10 +103,14 @@ document.getElementById('cfg_point').ondblclick = function (e) {
 
 var cfgActions = {
     group: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'hide', value: 'hide'},
         {text: 'twinkle', value: 'twinkle'}
     ],
     rect: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'width.left', value: 'width.left'},
         {text: 'width.right', value: 'width.right'},
         {text: 'height.top', value: 'height.top'},
@@ -117,24 +121,28 @@ var cfgActions = {
         {text: 'twinkle', value: 'twinkle'}
     ],
     circle: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'a', value: 'a'},
         {text: 'b', value: 'b'},
         {text: 'radius', value: 'radius'},
         {text: 'radian', value: 'radian'},
-        {text: 'center.x', value: 'center.x'},
-        {text: 'center.y', value: 'center.y'},
         {text: 'lineColor', value: 'lineColor'},
         {text: 'fillColor', value: 'fillColor'},
         {text: 'hide', value: 'hide'},
         {text: 'twinkle', value: 'twinkle'}
     ],
     polygon: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'lineColor', value: 'lineColor'},
         {text: 'fillColor', value: 'fillColor'},
         {text: 'hide', value: 'hide'},
         {text: 'twinkle', value: 'twinkle'}
     ],
     line: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'start.x', value: 'start.x'},
         {text: 'start.y', value: 'start.y'},
         {text: 'end.x', value: 'end.x'},
@@ -146,6 +154,8 @@ var cfgActions = {
         {text: 'twinkle', value: 'twinkle'}
     ],
     linearrow: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
         {text: 'start.x', value: 'start.x'},
         {text: 'start.y', value: 'start.y'},
         {text: 'end.x', value: 'end.x'},
