@@ -13,6 +13,7 @@
 <a class="easyui-linkbutton" style="width: 100%" onclick="clickPermission()">权限管理</a>
 <a class="easyui-linkbutton" style="width: 100%" onclick="clickSettings()">系统设置</a>
 <a class="easyui-linkbutton" style="width: 100%" onclick="clickCsPaint()">组态图形绘制</a>
+<a class="easyui-linkbutton" style="width: 100%" onclick="clickUploadFile()">组态图形上传</a>
 <script>
     function clickOpc() {
         addTab('Opc管理','/center/manage_opc');
@@ -38,6 +39,9 @@
     }
     function clickPermission() {
         addTab('权限管理','/center/permission');
+    }
+    function clickUploadFile() {
+        addTab('组态图形上传','/center/file');
     }
     function addTab(title, href) {
         if ($('#tt').tabs('exists', title)) {

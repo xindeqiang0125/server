@@ -18,27 +18,34 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@ServerEndpoint("/websocket")
+@ServerEndpoint("/datas")
 public class RealTimeData implements OnSubscribeResponse {
     private Session session;
     private DataMemory dataMemory;
     private List<Integer> itemIds;
     @OnMessage
     public void onMessage(String message, Session session) throws IOException, InterruptedException {
+        try {
+            Gson gson=new Gson();
+            itemIds=gson.fromJson(message,new TypeToken<ArrayList<Integer>>(){}.getType());
+            dataMemory=new DataMemory();
+            dataMemory.setOnSubscribeResponse(this);
+        }catch (Exception e){
 
+        }
     }
 
     @OnOpen
     public void onOpen(Session session) {
         this.session=session;
 
-        String message="[6,7,8,9,10,11,12,13,14,15,1,2,3,4,5]";
-        //String message="[]";
-        Gson gson=new Gson();
-        itemIds=gson.fromJson(message,new TypeToken<ArrayList<Integer>>(){}.getType());
-
-        dataMemory=new DataMemory();
-        dataMemory.setOnSubscribeResponse(this);
+//        String message="[6,7,8,9,10,11,12,13,14,15,1,2,3,4,5]";
+//        //String message="[]";
+//        Gson gson=new Gson();
+//        itemIds=gson.fromJson(message,new TypeToken<ArrayList<Integer>>(){}.getType());
+//
+//        dataMemory=new DataMemory();
+//        dataMemory.setOnSubscribeResponse(this);
     }
 
     @OnClose

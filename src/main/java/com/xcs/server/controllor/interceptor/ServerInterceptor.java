@@ -30,6 +30,9 @@ public class ServerInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         else {
+            for (String uri : permissionUris) {
+                if (uri.startsWith("/files")) return true;
+            }
             response.sendRedirect("/no_permission");
             return false;
         }
