@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloControllor {
+public class OpcClientControllor {
     private OpcClient client;
     @RequestMapping("/opcClientStart")
     public ResponseMsg opcClientStart(){
