@@ -33,19 +33,19 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         super.addViewControllers(registry);
-        registry.addViewController("/").setViewName("/login");
+        registry.addViewController("/").setViewName("login");
 //        registry.addViewController("/main").setViewName("/main");
-        registry.addViewController("/no_permission").setViewName("/no_permission");
-        registry.addViewController("/center").setViewName("/center");
-        registry.addViewController("/west").setViewName("/west");
-        registry.addViewController("/center/manage_opc").setViewName("/center/manage_opc");
-        registry.addViewController("/center/manage_group").setViewName("/center/manage_group");
-        registry.addViewController("/center/manage_item").setViewName("/center/manage_item");
-        registry.addViewController("/center/settings").setViewName("/center/settings");
-        registry.addViewController("/center/cs_paint").setViewName("/center/cs_paint");
-        registry.addViewController("/center/user").setViewName("/center/user");
-        registry.addViewController("/center/user_group").setViewName("/center/user_group");
-        registry.addViewController("/center/permission").setViewName("/center/permission");
-        registry.addViewController("/center/file").setViewName("/center/file");
+        registry.addViewController("/no_permission").setViewName("no_permission");
+        registry.addViewController("/center").setViewName("center");
+        registry.addViewController("/west").setViewName("west");
+        registry.addViewController("/center/manage_opc").setViewName("center/manage_opc");
+        registry.addViewController("/center/manage_group").setViewName("center/manage_group");
+        registry.addViewController("/center/manage_item").setViewName("center/manage_item");
+        registry.addViewController("/center/settings").setViewName("center/settings");
+        registry.addViewController("/center/cs_paint").setViewName("center/cs_paint");
+        registry.addViewController("/center/user").setViewName("center/user");
+        registry.addViewController("/center/user_group").setViewName("center/user_group");
+        registry.addViewController("/center/permission").setViewName("center/permission");
+        registry.addViewController("/center/file").setViewName("center/file");
     }
 }

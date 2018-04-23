@@ -26,7 +26,7 @@ public class LoginControllor {
         } catch (Exception e) {
             //e.printStackTrace();
             model.addAttribute("error",e.getMessage());
-            return "/login";
+            return "login";
         }
         session.setAttribute("user",checkUser);
         response.sendRedirect("/main");
@@ -42,6 +42,6 @@ public class LoginControllor {
     @RequestMapping("/main")
     public String mainPage(HttpSession session, Model model){
         model.addAttribute("user",session.getAttribute("user"));
-        return "/main";
+        return "main";
     }
 }
