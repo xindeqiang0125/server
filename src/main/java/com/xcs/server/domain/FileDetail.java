@@ -1,6 +1,7 @@
 package com.xcs.server.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class FileDetail {
@@ -63,5 +64,20 @@ public class FileDetail {
                 ", family='" + family + '\'' +
                 ", detail='" + detail + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileDetail that = (FileDetail) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(extension, that.extension) &&
+                Objects.equals(family, that.family);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, extension, family);
     }
 }

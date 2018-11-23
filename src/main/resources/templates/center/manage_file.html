@@ -5,24 +5,78 @@
     <title>Title</title>
 </head>
 <body>
-<link href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
-<div style="width: 500px">
-    <table class="table table-striped">
-        <thead>
-        <th>
-        <td>id</td>
-        <td>name</td>
-        <td>family</td>
-        <td>detail</td>
-        </th>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
+<div id="tb_file" style="text-align: right">
+    <input id="file_search_fileName" class="easyui-textbox" name="name" data-options="prompt:'FileName',buttonIcon:'icon-search',buttonText:'搜索'"/>
+    
+    <a id="file_edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a id="file_delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
 </div>
+<table id="dg_file"></table>
+<div id="file_dialog" style="width: 600px;height: 350px">
+    <form id="file_dialog_form" method="post">
+        <div><input id="file_id" name="id" data-options="label: 'Id:',readonly:true"/></div>
+        <div><input id="file_name" name="name" data-options="label: 'FileName:',required:true"/></div>
+        <div><input id="file_family" name="family" data-options="label: 'Family:',required:true"/></div>
+        <div><input id="file_detail" name="detail" data-options="label: 'Detail:'"/></div>
+        <div><input id="file_extension" name="extension" data-options="label: 'Extension:',readonly:true"/></div>
+    </form>
+</div>
+<style>
+    #file_dialog div{
+        margin: 10px;
+        text-align: center;
+    }
+</style>
+<script>
+    $('#file_search_fileName').textbox({
+        onClickButton:function () {
+            $('#dg_file').datagrid({
+                url: '/files/search',
+                queryParams:{
+                    name:$("#file_search_fileName").textbox('getValue')
+                }
+            })
+        },
+        onChange:function () {
+            $('#dg_file').datagrid({
+                url: '/files/search',
+                queryParams:{
+                    name:$("#file_search_fileName").textbox('getValue')
+                }
+            })
+        }
+    });
 
 
 
+    $('#file_id,#file_name,#file_family,#file_detail,#file_extension').textbox({
+        width:500,
+        height:30,
+        labelWidth:150
+    });
+    $('#file_detail').textbox({
+        width:500,
+        height:80,
+        labelWidth:150,
+        multiline:true
+    });
+
+    initDatagridPanel3($('#dg_file'),'/files/search',
+        [[
+            {field:'id',title:'ID',width:20,align:'center'},
+            {field:'name',title:'FileName',width:150,align:'center'},
+            {field:'family',title:'Family',width:100,align:'center'},
+            {field:'detail',title:'Detail',width:100,align:'center'},
+            {field:'extension',title:'Extension',width:100,align:'center'}
+        ]],$('#tb_file'),$('#file_add'),$('#file_edit'),$('#file_delete'),
+        $('#file_dialog'),'修改FILE元数据',$('#file_dialog_form'),'/files/save','/files/delete',
+        function (row) {
+            $('#file_id').textbox('setValue',row.id);
+            $('#file_name').textbox('setValue',row.name);
+            $('#file_family').textbox('setValue',row.family);
+            $('#file_detail').textbox('setValue',row.detail);
+            $('#file_extension').textbox('setValue',row.extension);
+        });
+</script>
 </body>
 </html>
