@@ -87,24 +87,36 @@ public class ManageControllor {
 
     @PostMapping("/manage/saveopcs")
     public ResponseMsg saveOrUpdateOpcs(@RequestBody List<XOpc> xOpcs){
-        if (xOpcs != null) {
-            opcManageService.saveOpcs(xOpcs);
+        try {
+            if (xOpcs != null) {
+                opcManageService.saveOpcs(xOpcs);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"保存失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"保存成功！");
     }
 
     @PostMapping("/manage/saveopc")
     public ResponseMsg saveOrUpdateOpc(XOpc xOpc){
-        if (xOpc != null) {
-            opcManageService.saveOpc(xOpc);
+        try {
+            if (xOpc != null) {
+                opcManageService.saveOpc(xOpc);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"保存失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"保存成功！");
     }
 
     @PostMapping("/manage/deleteopcs")
     public ResponseMsg deleteOpcs(@RequestBody List<Integer> xOpcIds){
-        if (xOpcIds != null){
-            opcManageService.deleteOpcs(xOpcIds);
+        try {
+            if (xOpcIds != null){
+                opcManageService.deleteOpcs(xOpcIds);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"删除失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"删除成功！");
     }
@@ -127,24 +139,36 @@ public class ManageControllor {
 
     @PostMapping("/manage/savegroups")
     public ResponseMsg saveOrUpdateGroups(@RequestBody List<XGroup> xGroups){
-        if (xGroups != null) {
-            opcManageService.saveGroups(xGroups);
+        try {
+            if (xGroups != null) {
+                opcManageService.saveGroups(xGroups);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"保存失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"保存成功！");
     }
 
     @PostMapping("/manage/savegroup")
     public ResponseMsg saveOrUpdateGroup(XGroup xGroup){
-        if (xGroup != null) {
-            opcManageService.saveGroup(xGroup);
+        try {
+            if (xGroup != null) {
+                opcManageService.saveGroup(xGroup);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"保存失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"保存成功！");
     }
 
     @PostMapping("/manage/deletegroups")
     public ResponseMsg deleteGroups(@RequestBody List<Integer> xGroupIds){
-        if (xGroupIds != null){
-            opcManageService.deleteGroups(xGroupIds);
+        try {
+            if (xGroupIds != null){
+                opcManageService.deleteGroups(xGroupIds);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"删除失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"删除成功！");
     }
@@ -180,24 +204,36 @@ public class ManageControllor {
 
     @PostMapping("/manage/saveitems")
     public ResponseMsg saveOrUpdateItems(@RequestBody List<XItem> xItems){
-        if (xItems != null) {
-            opcManageService.saveItems(xItems);
+        try {
+            if (xItems != null) {
+                opcManageService.saveItems(xItems);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"保存失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"保存成功！");
     }
 
     @PostMapping("/manage/saveitem")
     public ResponseMsg saveOrUpdateItem(XItem xItem){
-        if (xItem != null) {
-            opcManageService.saveItem(xItem);
+        try {
+            if (xItem != null) {
+                opcManageService.saveItem(xItem);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"保存失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"保存成功！");
     }
 
     @PostMapping("/manage/deleteitems")
     public ResponseMsg deleteItems(@RequestBody List<Integer> xItemIds){
-        if (xItemIds != null){
-            opcManageService.deleteItems(xItemIds);
+        try {
+            if (xItemIds != null){
+                opcManageService.deleteItems(xItemIds);
+            }
+        } catch (Exception e) {
+            return new ResponseMsg(ResponseMsg.FAILED,"删除失败！");
         }
         return new ResponseMsg(ResponseMsg.SUCCESS,"删除成功！");
     }

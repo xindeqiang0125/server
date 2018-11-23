@@ -30,4 +30,9 @@ public class FileDetailServiceImpl implements FileDetailService {
         return fileDetailRepository.findOne(id);
     }
 
+    @Override
+    public void delete(Integer id) {
+        fileDetailRepository.delete(id);
+    }
+
 }

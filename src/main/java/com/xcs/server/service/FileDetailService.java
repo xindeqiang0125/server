@@ -9,4 +9,6 @@ public interface FileDetailService {
     List<FileDetail> findAll();
 
     FileDetail findById(Integer id);
+
+    void delete(Integer id);
 }

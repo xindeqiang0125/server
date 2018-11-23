@@ -5,7 +5,6 @@ import com.xcs.server.service.FileDetailService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,13 +45,26 @@ public class FileController {
         return fileDetailService.findAll();
     }
 
-    @RequestMapping(value = "/files/{id}/content")
-    public String getFileContent(@PathVariable Integer id) throws IOException {
+    @RequestMapping(value = "/files/content")
+    public String getFileContent(Integer id) throws IOException {
         FileDetail fileDetail = fileDetailService.findById(id);
         String path = uploadPath +
                 fileDetail.getFamily() + "/" +
                 fileDetail.getName() + "." + fileDetail.getExtension();
         File f = new File(path);
         return FileUtils.readFileToString(f,"utf-8");
+    }
+
+    @RequestMapping(value = "/files/delete")
+    public void delFile(Integer id){
+        FileDetail fileDetail = fileDetailService.findById(id);
+        String path = uploadPath +
+                fileDetail.getFamily() + "/" +
+                fileDetail.getName() + "." + fileDetail.getExtension();
+        File f = new File(path);
+        try {
+            FileUtils.forceDelete(f);
+        } catch (IOException e) { }
+        fileDetailService.delete(id);
     }
 }
