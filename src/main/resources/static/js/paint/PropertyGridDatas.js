@@ -9,7 +9,14 @@ var polygonDatas = {
         {"name": "height", "value": "", "group": "Position/Size", "editor": "numberbox"},
         {"name": "lineWidth", "value": "", "group": "Style", "editor": "numberbox"},
         {"name": "lineColor", "value": "", "group": "Style", "editor": "text"},
-        {"name": "fillColor", "value": "", "group": "Style", "editor": "text"}
+        {"name": "fillColor", "value": "", "group": "Style", "editor": "text"},
+        {"name": "points", "value": "", "group": "Style", "editor": {
+            "type":"textarea",
+                "options":{
+                "height":200
+                }
+            }
+        }
     ]
 };
 
@@ -18,6 +25,7 @@ function setPolygonDatas(shape) {
         var obj = polygonDatas.rows[i];
         obj.value = shape[obj.name];
     }
+    polygonDatas.rows[9].value = JSON.stringify(polygonDatas.rows[9].value);
     $('#cspaint_propertygrid').propertygrid({
         data: polygonDatas,
         onAfterEdit: function (index, row, changes) {
@@ -44,6 +52,9 @@ function setPolygonDatas(shape) {
                     break;
                 case 8:
                     shape.setStyle(shape.lineWidth, shape.lineColor, value);
+                    break;
+                case 9:
+                    shape.setPoints(JSON.parse(value));
                     break;
             }
             screen.reDraw();

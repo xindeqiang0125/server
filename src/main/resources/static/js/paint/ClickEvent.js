@@ -385,7 +385,7 @@ function deepCopy(p,c) {
 function addImg() {
     var img = new Img();
     // img.readFromFile();
-    img.setImageUrl('/image/logo.png');
+    img.setImageUrl(img.base64);
     screen.addShape(img);
     screen.reDraw();
 }
