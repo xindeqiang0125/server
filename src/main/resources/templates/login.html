@@ -1,73 +1,67 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8"/>
-    <title>登录OPC管理系统</title>
-    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css"/>
-    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>
-    <script type="text/javascript" src="easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+    <title>登录</title>
+    <link href="/css/login-style.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!-- -->
+    <script>
+        var __links = document.querySelectorAll('a');
+
+        function __linkClick(e) {
+            parent.window.postMessage(this.href, '*');
+        }
+
+        for (var i = 0, l = __links.length; i &lt; l; i++) {
+            if (__links[i].getAttribute('data-t') == '_blank') {
+                __links[i].addEventListener('click', __linkClick, false);
+            }
+        }
+    </script>
+    <script src="/easyui/jquery.min.js"></script>
+    <script>
+        $(document).ready(function (c) {
+            $('.alert-close').on('click', function (c) {
+                $('.message').fadeOut('slow', function (c) {
+                    $('.message').remove();
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-<div id="login_panel" style="width: 500px">
-    <form id="login_form" method="post" action="/login">
-        <div><input id="login_name" name="tel"/></div>
-        <div><input id="login_password" name="password"/></div>
-    </form>
+<!-- contact-form -->
+<div class="message warning">
+    <div class="inset">
+        <div class="login-head">
+            <h1>Login Form</h1>
+            <div class="alert-close"></div>
+        </div>
+        <form action="/login" method="post">
+            <li>
+                <input name="tel" type="text" class="text" value="Telephone" onfocus="this.value = '';"
+                       onblur="if (this.value == '') {this.value = 'Telephone';}"/><a href="#" class=" icon user"></a>
+            </li>
+            <div class="clear"></div>
+            <li>
+                <input name="password" type="password" value="Password" onfocus="this.value = '';"
+                       onblur="if (this.value == '') {this.value = 'Password';}"/> <a href="#" class="icon lock"></a>
+            </li>
+            <div class="clear"></div>
+            <div class="submit">
+                <input type="submit" value="Sign in"/>
+                <div class="clear"></div>
+            </div>
 
-    <div><!--/*@thymesVar id="error" type="String"*/-->
-    <span id="error_info" style="color: #b52b27" th:text="${error}"></span></div>
-    <div><a id="login_btn" class="easyui-linkbutton" style="width: 60%">登录</a></div>
+        </form>
+    </div>
 </div>
-<style>
-    #login_panel div{
-        margin: 10px;
-        text-align: center;
-    }
-</style>
-<script>
-    $('#login_panel').window({
-        top:100,
-        title: '请输入电话和密码',
-        closable:false, collapsible:false,minimizable:false,maximizable:false,
-        draggable:false,resizable:false
-    });
-//    $('#login_form').form({
-//        url:'/111',
-//        iframe:false,
-//        success:function(data){
-//            var res=JSON.parse(data);
-//            if (res.result=='失败'){
-//                $('#error_info').text(res.msg);
-//            }else {
-//
-//            }
-//        }
-//    });
-    $('#login_name').textbox({
-        width:350,
-        height:40,
-        labelWidth:40,
-        label:'电话',
-        required:true
-    });
-    $('#login_password').passwordbox({
-        width:350,
-        height:40,
-        labelWidth:40,
-        label:'密码',
-        required:true
-    });
-    $('#login_btn').linkbutton({
-        size:'large',
-        onClick:function () {
-            $('#login_form').submit();
-//            $.post('',{},function () {
-//
-//            });
-        }
-    })
-</script>
+<div class="clear"></div>
+<div class="footer">
+    <p>Copyright &copy; 2018.</p>
+</div>
+
 </body>
 </html>
