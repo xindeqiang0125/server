@@ -5,11 +5,13 @@
     <title>组态图形绘制</title>
     <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/cs_paint.css"/>
     <script type="text/javascript" src="/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <body style="height: 100%">
+<!--打开文件-->
 <input id="openfile" type="file" onchange="fileChange()" style="display: none"/>
 <!--<a href="javascript:void(0)" id="aa">保存</a>-->
 <!--菜单-->
@@ -27,16 +29,18 @@
 
     <div id="shapes" style="width: 60%;display: inline-block;margin-left: 100px">
         <!--<a id="rect" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">□</a>-->
-        <span onclick="addRect()">矩形</span>
-        <span onclick="addCircle()">圆形</span>
-        <span onclick="addPolygon()">多边形</span>
-        <span onclick="addLine()">直线</span>
-        <span onclick="addLineArrow()">箭头</span>
-        <span onclick="addText()">文字</span>
+        <button onclick="addRect()"><img src="/image/rect.png"/></button>
+        <button onclick="addCircle()"><img src="/image/circle.png"/></button>
+        <button onclick="addPolygon()"><img src="/image/polygon.png"/></button>
+        <button onclick="addLine()"><img src="/image/line.png"/></button>
+        <button onclick="addLineArrow()"><img src="/image/line-arrow.png"/></button>
+        <button onclick="addText()"><img src="/image/text.png"/></button>
+        <button onclick="addImg()"><img src="/image/image.png"/></button>
         <div style="display: inline-block;" onmouseenter="showGalleryPanel()">
-            <span >图库</span>
+            <button><img src="/image/ku.png"/></button>
             <!--图库面板-->
-            <div id="gallery_panel" style="position:absolute;z-index: 99999;display: none;width: 300px;height: 50px;background-color: #aeff72">
+            <div id="gallery_panel"
+                 style="position:absolute;z-index: 99999;display: none;width: 300px;height: 50px;background-color: #aeff72">
                 <input id="galleryfile" type="file" onchange="galleryFileChange()"/>
                 <button class="icon-save" onclick="saveGallery()" style="width: 16px;height: 16px"></button>
                 <br/>
@@ -45,7 +49,8 @@
     </div>
 
 </div>
-
+<!--选择图片-->
+<input style="display: none" type="file" accept="image/*" id="image_file" onchange="onImgChange(this.files[0])"/>
 <!--属性表格-->
 <div id="propertygrid_container" style="display: inline-block;float: right;background-color: #b52b27">
     <table id="cspaint_propertygrid"></table>
@@ -110,7 +115,7 @@
     </div>
     <div>
         <span>测点</span><input id="cfg_point" style="width: 50px;background-color: #2984a4"/>
-        <input id="cfg_action" />
+        <input id="cfg_action"/>
         <input id="cfg_condition"/>
         <button class="icon-add" style="width: 30px;height: 30px" onclick="addCfg()"></button>
     </div>
@@ -119,7 +124,8 @@
 <div id="searchItem_dialog">
     <input id="searchItem_groupId" class="easyui-combobox" name="groupId" data-options="url:'/manage/getgroups',valueField:'id',textField:'groupName',
     width:120,label: 'Group:',labelAlign:'right',labelWidth:45,panelHeight:'auto',panelMaxHeight:100,editable:false"/>
-    <input id="searchItem_itemName" class="easyui-textbox" name="itemName" data-options="prompt:'ItemName',buttonIcon:'icon-search',buttonText:'搜索'"/>
+    <input id="searchItem_itemName" class="easyui-textbox" name="itemName"
+           data-options="prompt:'ItemName',buttonIcon:'icon-search',buttonText:'搜索'"/>
 
     <div style="height: 300px">
         <table id="searchItem_datagrid"></table>
@@ -130,7 +136,6 @@
     <input id="gallery_name" class="easyui-textbox" data-options=""/>
 </div>
 
-<link rel="stylesheet" type="text/css" href="/css/cs_paint.css"/>
 <script type="text/javascript" src="/js/paint/cs_paint.js"></script>
 <script type="text/javascript" src="/js/paint/PropertyGridDatas.js"></script>
 <script type="text/javascript" src="/js/paint/ClickEvent.js"></script>
@@ -143,6 +148,7 @@
 <script type="text/javascript" src="/js/paint/obj_Line.js"></script>
 <script type="text/javascript" src="/js/paint/obj_LineArrow.js"></script>
 <script type="text/javascript" src="/js/paint/obj_Text.js"></script>
+<script type="text/javascript" src="/js/paint/obj_Img.js"></script>
 <script type="text/javascript" src="/js/paint/cfg_Configuration.js"></script>
 <script type="text/javascript" src="/js/paint/cfg_Dialog.js"></script>
 <script type="text/javascript" src="/js/paint/Gallery.js"></script>

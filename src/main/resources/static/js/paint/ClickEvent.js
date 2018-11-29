@@ -202,9 +202,11 @@ function newFile() {
     screen.reDraw();
 }
 
-function openFile(files) {
+//单击打开文件按钮
+function openFile() {
     $('#openfile').click();
 }
+//组态文件发生改变
 function fileChange() {
     var file = x('openfile').files[0];
     var fileReader = new FileReader();
@@ -254,11 +256,15 @@ function loadShapeGroup(shapeGroup) {
                 shape=new Text();
                 for (var j in obj) shape[j]=obj[j];
                 break;
+            case 'image':
+                shape = loadImg(obj);
+                break;
         }
         res.add(shape);
     }
     return res;
 }
+
 function shapeJsonToObject(obj) {
     var shape;
     switch (obj.type) {
@@ -289,9 +295,30 @@ function shapeJsonToObject(obj) {
             shape = new Text();
             for (var j in obj) shape[j] = obj[j];
             break;
+        case 'image':
+            shape = loadImg(obj);
+            break;
     }
     return shape;
 }
+
+function loadImg(obj) {
+    var shape = new Img();
+    for (var j in obj) shape[j] = obj[j];
+    shape.image = new Image();
+    shape.image.onload = function (ev) {
+        if (!shape.hasLoaded) {
+            shape.width = this.width;
+            shape.height = this.height;
+            shape.hasLoaded = true;
+        }
+        screen.reDraw();
+    };
+    shape.setImageUrl(shape.base64);
+    return shape;
+}
+
+
 function loadShapesToMemory(shapeList) {
     for (var i = 0, len = shapeList.length; i < len; i++) {
         var obj = shapeList[i];
@@ -355,6 +382,13 @@ function deepCopy(p,c) {
     return c;
 }
 
+function addImg() {
+    var img = new Img();
+    // img.readFromFile();
+    img.setImageUrl('/image/logo.png');
+    screen.addShape(img);
+    screen.reDraw();
+}
 
 function addRect() {
     var rect = new Rect();

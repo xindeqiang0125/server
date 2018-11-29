@@ -288,10 +288,10 @@ function setTextDatas(shape) {
         var obj = textDatas.rows[i];
         obj.value = shape[obj.name];
     }
-    textDatas.rows[6].value=shape.text[0];
+    textDatas.rows[6].value = shape.text[0];
     for (var i = 1, len = shape.text.length; i < len; i++) {
         var obj = shape.text[i];
-        textDatas.rows[6].value+='\n'+obj;
+        textDatas.rows[6].value += '\n' + obj;
     }
     $('#cspaint_propertygrid').propertygrid({
         data: textDatas,
@@ -315,14 +315,77 @@ function setTextDatas(shape) {
                     shape.setText(value);
                     break;
                 case 7:
-                    shape.setStyle(shape.fontColor, value,shape.backgroundColor);
+                    shape.setStyle(shape.fontColor, value, shape.backgroundColor);
                     break;
                 case 8:
-                    shape.setStyle(value,shape.fontSize,shape.backgroundColor);
+                    shape.setStyle(value, shape.fontSize, shape.backgroundColor);
                     break;
                 case 9:
-                    shape.setStyle(shape.fontColor,shape.fontSize,value);
+                    shape.setStyle(shape.fontColor, shape.fontSize, value);
                     break;
+            }
+            screen.reDraw();
+        }
+    })
+}
+
+function onImgChange(file) {
+    var list = selectedShapeGroup.shapeList;
+    if (list.length == 1 && list[0].type == 'image') {
+        list[0].readFromFile(file);
+    }
+}
+
+var imgDatas = {
+    "total": 8,
+    "rows": [
+        {"name": "id", "value": "", "group": "ID Settings"},
+        {"name": "type", "value": "", "group": "ID Settings"},
+        {"name": "startX", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "startY", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "width", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "height", "value": "", "group": "Position/Size", "editor": "numberbox"},
+        {"name": "angle", "value": "", "group": "Style", "editor": "numberbox"},
+        {"name": "image", "value": "", "group": "Style"}
+    ]
+};
+
+function setImgDatas(shape) {
+    for (var i = 0, len = imgDatas.rows.length; i < len; i++) {
+        var obj = imgDatas.rows[i];
+        obj.value = shape[obj.name];
+    }
+    imgDatas.rows[7].value = shape.base64;
+    $('#cspaint_propertygrid').propertygrid({
+        data: imgDatas,
+        onClickCell:function(index, field, value){
+            if (index == 7){
+                $('#image_file').click()
+            }
+        },
+        onAfterEdit: function (index, row, changes) {
+            var value = changes.value;
+            if (value == null) return;
+            switch (index) {
+                case 2:
+                    shape.move(value - shape.startX, 0);
+                    break;
+                case 3:
+                    shape.move(0, value - shape.startY);
+                    break;
+                case 4:
+                    shape.reSize({x: shape.startX, y: shape.startY}, value / shape.width, 1);
+                    break;
+                case 5:
+                    shape.reSize({x: shape.startX, y: shape.startY}, 1, value / shape.height);
+                    break;
+                case 6:
+                    shape.rotate({x: shape.startX + shape.width / 2, y: shape.startY + shape.height / 2}, value - shape.angle);
+                    break;
+                case 7:
+                    // shape.readFromFile();
+                    break;
+
             }
             screen.reDraw();
         }
@@ -347,6 +410,9 @@ function changePropertyGridDatas(shape) {
             break;
         case 'text':
             setTextDatas(shape);
+            break;
+        case 'image':
+            setImgDatas(shape);
             break;
         case 'group':
             setGroupDatas(shape);

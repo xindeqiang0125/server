@@ -141,7 +141,7 @@ $('#cspaint_propertygrid').propertygrid({
             return 'background-color:' + row.value + ';color:' + invertColor(row.value);
         }
     },
-    editorHeight: 90,
+    editorHeight: 50,
     data: {
         "total": 4, "rows": [
             {"name": "ID", "value": "Bill Smith", "group": "ID Settings", "editor": "text"},
@@ -538,7 +538,7 @@ $(function () {
     initPage();
     setCanvasSize();
 
-    test();
+    // test();
 });
 
 

@@ -83,7 +83,10 @@ function initDatagridPanel3(datagridSelector,
         pageSize: 20,
         striped: true,
         fit: true,
-        toolbar: toolbarSelector
+        toolbar: toolbarSelector,
+        onSelect:function (index, row) {
+
+        }
     });
     dialogSelector.dialog({
         title: dialogTitle,

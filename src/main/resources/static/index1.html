@@ -6,8 +6,24 @@
 </head>
 <body>
 辛德强
+<input id="file" type="file"/>
 <div id="messages"></div>
+
 <script type="text/javascript">
+    var file = document.getElementById('file');
+    file.onchange = function(){
+        var f = this.files[0];            //单文件直接用this.files[0]，就不要循环了
+
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(f);
+        oFReader.onload = function (oFREvent) {
+            console.log(oFREvent.target.result);//base64
+        };
+
+    }
+
+
+
     var webSocket =
         new WebSocket('ws://localhost:8080/datas');
     webSocket.onerror = function(event) {
@@ -30,6 +46,7 @@
     function onOpen(event) {
         document.getElementById('messages').innerHTML
             = 'Connection established';
+        webSocket.send("[1,2,5,6]")
     }
 
     function onError(event) {
