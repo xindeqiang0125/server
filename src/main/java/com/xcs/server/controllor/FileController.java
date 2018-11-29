@@ -29,19 +29,23 @@ public class FileController {
     private FileDetailService fileDetailService;
 
     @RequestMapping(value = "/upload")
-    public String uploadFile(FileDetail fileDetail, MultipartFile file, HttpServletRequest request) throws IOException {
+    public ResponseMsg uploadFile(FileDetail fileDetail, MultipartFile file, HttpServletRequest request) throws IOException {
         if ("".equals(fileDetail.getName())||"".equals(fileDetail.getFamily())){
-            return "上传失败！请输入名称和类别！";
+            return ResponseMsg.getFailed("上传失败！请输入名称和类别！");
         }
-        String name = file.getOriginalFilename();
-        String extension = name.substring(name.lastIndexOf('.') + 1);
-        fileDetail.setExtension(extension);
-        fileDetail = fileDetailService.upload(fileDetail);
+        try {
+            String name = file.getOriginalFilename();
+            String extension = name.substring(name.lastIndexOf('.') + 1);
+            fileDetail.setExtension(extension);
+            fileDetail = fileDetailService.upload(fileDetail);
 
-        String path = getPath(fileDetail);
-        File f = new File(path);
-        FileUtils.writeByteArrayToFile(f, file.getBytes());
-        return path;
+            String path = getPath(fileDetail);
+            File f = new File(path);
+            FileUtils.writeByteArrayToFile(f, file.getBytes());
+            return ResponseMsg.getSuccess("上传成功");
+        } catch (IOException e) {
+            return ResponseMsg.getFailed("上传失败");
+        }
     }
 
     private String getPath(FileDetail fileDetail) {
