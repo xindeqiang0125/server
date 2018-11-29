@@ -342,9 +342,7 @@ function saveFile() {
     file.screen=screen;
     export_raw('file.xcs',JSON.stringify(file))
 }
-function saveAsFile() {
-    saveFile();
-}
+
 function fake_click(obj) {
     var ev = document.createEvent("MouseEvents");
     ev.initMouseEvent(
@@ -437,8 +435,8 @@ function addText() {
     screen.reDraw();
 }
 
-function showGalleryPanel() {
-    $("#gallery_panel").show();
+function toggleGalleryPanel() {
+    $("#gallery_panel").toggle();
 }
 
 function hideGalleryPanel() {

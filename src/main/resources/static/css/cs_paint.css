@@ -2,10 +2,10 @@ html,body{
     margin: 0px;
     padding: 0px;
 }
-#shapes span{
-    margin-right: 6px;
-    color: #ffb234;
-}
+/*#shapes span{*/
+    /*margin-right: 6px;*/
+    /*color: #ffb234;*/
+/*}*/
 /*#cavanas_container{*/
     /*padding: 0px;*/
 /*}*/
@@ -25,4 +25,47 @@ html,body{
 #cfg_dialog .tip{
     font-size: 20px;
     color: #ff0c13;
+}
+
+#gallery_panel span{
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+    color: #a87d4e;
+    font-size: large;
+    cursor: pointer;
+}
+
+.icon-shape-rect{
+    background:url('../image/rect.png') no-repeat center center;
+    background-size:16px 16px;
+}
+.icon-shape-circle{
+    background:url('../image/circle.png') no-repeat center center;
+    background-size:16px 16px;
+}
+
+.icon-shape-polygon{
+    background:url('../image/polygon.png') no-repeat center center;
+    background-size:16px 16px;
+}
+.icon-shape-line{
+    background:url('../image/line.png') no-repeat center center;
+    background-size:16px 16px;
+}
+.icon-shape-line-arrow{
+    background:url('../image/line-arrow.png') no-repeat center center;
+    background-size:16px 16px;
+}
+.icon-shape-text{
+    background:url('../image/text.png') no-repeat center center;
+    background-size:16px 16px;
+}
+.icon-shape-image{
+    background:url('../image/image.png') no-repeat center center;
+    background-size:16px 16px;
+}
+.icon-shape-ku{
+    background:url('../image/ku.png') no-repeat center center;
+    background-size:16px 16px;
 }

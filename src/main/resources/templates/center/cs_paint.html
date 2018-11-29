@@ -24,30 +24,28 @@
         <div onclick="newFile()" data-options="iconCls:'icon-open'">新建</div>
         <div onclick="openFile()" data-options="iconCls:'icon-open'">打开</div>
         <div onclick="saveFile()" data-options="iconCls:'icon-save'">保存</div>
-        <div onclick="saveAsFile()" data-options="iconCls:'icon-save'">另存为</div>
     </div>
 
-    <div id="shapes" style="width: 60%;display: inline-block;margin-left: 100px">
-        <!--<a id="rect" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">□</a>-->
-        <button onclick="addRect()"><img src="/image/rect.png"/></button>
-        <button onclick="addCircle()"><img src="/image/circle.png"/></button>
-        <button onclick="addPolygon()"><img src="/image/polygon.png"/></button>
-        <button onclick="addLine()"><img src="/image/line.png"/></button>
-        <button onclick="addLineArrow()"><img src="/image/line-arrow.png"/></button>
-        <button onclick="addText()"><img src="/image/text.png"/></button>
-        <button onclick="addImg()"><img src="/image/image.png"/></button>
-        <div style="display: inline-block;" onmouseenter="showGalleryPanel()">
-            <button><img src="/image/ku.png"/></button>
-            <!--图库面板-->
-            <div id="gallery_panel"
-                 style="position:absolute;z-index: 99999;display: none;width: 300px;height: 50px;background-color: #aeff72">
-                <input id="galleryfile" type="file" onchange="galleryFileChange()"/>
-                <button class="icon-save" onclick="saveGallery()" style="width: 16px;height: 16px"></button>
-                <br/>
-            </div>
+    <div id="shapes" style="width: 60%;display: inline-block;">
+        <div>
+            <a onclick="addRect()"      href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-rect'">矩形</a>
+            <a onclick="addCircle()"    href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-circle'">圆形</a>
+            <a onclick="addPolygon()"   href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-polygon'">多边形</a>
+            <a onclick="addLine()"      href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-line'">直线</a>
+            <a onclick="addLineArrow()" href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-line-arrow'">箭头</a>
+            <a onclick="addText()"      href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-text'">文字</a>
+            <a onclick="addImg()"       href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-image'">图片</a>
+            <a onclick="toggleGalleryPanel()"       href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-shape-ku'">图库</a>
         </div>
     </div>
-
+    <div style="display: inline-block">
+        <!--图库面板-->
+        <div id="gallery_panel" style="position:absolute;z-index: 99999;display: none;width: 300px;height: 50px;background-color: #aeff72">
+            <input id="galleryfile" type="file" onchange="galleryFileChange()"/>
+            <button class="icon-save" onclick="saveGallery()" style="width: 16px;height: 16px"></button>
+            <br/>
+        </div>
+    </div>
 </div>
 <!--选择图片-->
 <input style="display: none" type="file" accept="image/*" id="image_file" onchange="onImgChange(this.files[0])"/>
