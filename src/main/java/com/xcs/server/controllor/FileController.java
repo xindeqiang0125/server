@@ -36,7 +36,7 @@ public class FileController {
         String name = file.getOriginalFilename();
         String extension = name.substring(name.lastIndexOf('.') + 1);
         fileDetail.setExtension(extension);
-        fileDetailService.saveFileDetail(fileDetail);
+        fileDetail = fileDetailService.upload(fileDetail);
 
         String path = getPath(fileDetail);
         File f = new File(path);

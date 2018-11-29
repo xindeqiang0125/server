@@ -56,4 +56,10 @@ public class FileDetailServiceImpl implements FileDetailService {
     public Page<FileDetail> search(String name, Pageable pageable) {
         return fileDetailRepository.findByNameContaining(name,pageable);
     }
+
+    @Override
+    public FileDetail upload(FileDetail fileDetail) {
+        FileDetail save = fileDetailRepository.save(fileDetail);
+        return save;
+    }
 }

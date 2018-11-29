@@ -20,4 +20,6 @@ public interface FileDetailService {
     List<FileDetail> delete(List<Integer> ids);
 
     Page<FileDetail> search(String name, Pageable pageable);
+
+    FileDetail upload(FileDetail fileDetail);
 }
