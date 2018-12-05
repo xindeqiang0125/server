@@ -260,13 +260,13 @@ public class ManageControllor {
         return res;
     }
 
-    @PostMapping("/manage/getitem")
+    @GetMapping("/manage/getitem")
     public XItem getItems(Integer itemId){
         if (itemId == null) itemId=1;
         return opcManageService.getItem(itemId);
     }
 
-    @PostMapping("/gethistory")
+    @GetMapping("/gethistory")
     public List getHistory(Integer itemId,String start,String end){
         if (itemId == null) itemId=1;
         if (start == null) start="2007-12-03T10:15:30";

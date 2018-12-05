@@ -27,7 +27,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/logout")
                 .excludePathPatterns("/error")
-                .excludePathPatterns("/center/cs_paint");
+                .excludePathPatterns("/center/cs_paint")
+                .excludePathPatterns("/manage/getitem")
+                .excludePathPatterns("/gethistory");
         registry.addInterceptor(mainPageInterceptor).addPathPatterns("/main")
                 .addPathPatterns("/west").addPathPatterns("/center");
     }
