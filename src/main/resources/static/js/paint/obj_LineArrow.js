@@ -5,7 +5,7 @@ function LineArrow() {
     this.startY = 0;
     this.width = 0;
     this.height = 0;
-    this.points = [{x: 10, y: 10}, {x: 30, y: 10}];
+    this.points = [{x: 10, y: 10}, {x: 30, y: 30}];
     this.lineWidth = 2;
     this.lineColor = '#000000';
 
@@ -31,24 +31,24 @@ LineArrow.prototype.draw = function () {
     cxt.beginPath();
     cxt.lineWidth = 1;
 
-    var jiao=Math.atan((this.points[1].y-this.points[0].y)/(this.points[1].x-this.points[0].x));
-    var number1 = Math.max(5,this.lineWidth);
-    var number2 = 2*number1;
-    var point1={
-        x:this.points[1].x+number1*Math.sin(jiao),
-        y:this.points[1].y-number1*Math.cos(jiao)
+    var jiao = Math.atan((this.points[1].y - this.points[0].y) / (this.points[1].x - this.points[0].x));
+    var number1 = Math.max(5, this.lineWidth);
+    var number2 = 2 * number1;
+    var point1 = {
+        x: this.points[1].x + number1 * Math.sin(jiao),
+        y: this.points[1].y - number1 * Math.cos(jiao)
     };
-    var point2={
-        x:2*this.points[1].x-point1.x,
-        y:2*this.points[1].y-point1.y
+    var point2 = {
+        x: 2 * this.points[1].x - point1.x,
+        y: 2 * this.points[1].y - point1.y
     };
-    var point3={
-        x:this.points[1].x+(this.points[1].x-this.points[0].x)*number2/this.lineLength,
-        y:this.points[1].y+(this.points[1].y-this.points[0].y)*number2/this.lineLength
+    var point3 = {
+        x: this.points[1].x + (this.points[1].x - this.points[0].x) * number2 / this.lineLength,
+        y: this.points[1].y + (this.points[1].y - this.points[0].y) * number2 / this.lineLength
     };
-    cxt.moveTo(point1.x,point1.y);
-    cxt.lineTo(point2.x,point2.y);
-    cxt.lineTo(point3.x,point3.y);
+    cxt.moveTo(point1.x, point1.y);
+    cxt.lineTo(point2.x, point2.y);
+    cxt.lineTo(point3.x, point3.y);
     cxt.closePath();
     cxt.fill();
     cxt.stroke();
@@ -60,8 +60,8 @@ LineArrow.prototype.setPoints = function (points) {
     this.startY = Math.min(points[0].y, points[1].y);
     var endX = Math.max(points[0].x, points[1].x);
     var endY = Math.max(points[0].y, points[1].y);
-    this.width = endX - this.startX;
-    this.height = endY - this.startY;
+    this.width = Math.max(endX - this.startX, 20);
+    this.height = Math.max(endY - this.startY, 20);
     this.startX -= this.lineWidth / 2;
     this.startY -= this.lineWidth / 2;
     this.width += this.lineWidth;

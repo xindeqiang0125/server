@@ -8,10 +8,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(indexes = {@Index(name = "xItem_time",columnList = "x_item_id,time")})
 public class StringHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(length = 128)
     private String value;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -30,11 +31,11 @@ public class StringHistory {
         this.xItem = xItem;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

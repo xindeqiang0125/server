@@ -5,7 +5,7 @@ function Line() {
     this.startY = 0;
     this.width = 0;
     this.height = 0;
-    this.points = [{x: 10, y: 10}, {x: 30, y: 10}];
+    this.points = [{x: 10, y: 10}, {x: 30, y: 30}];
     this.lineWidth = 2;
     this.lineColor = '#000000';
 
@@ -34,8 +34,8 @@ Line.prototype.setPoints = function (points) {
     this.startY = Math.min(points[0].y, points[1].y);
     var endX = Math.max(points[0].x, points[1].x);
     var endY = Math.max(points[0].y, points[1].y);
-    this.width = endX - this.startX;
-    this.height = endY - this.startY;
+    this.width = Math.max(endX - this.startX, 20);
+    this.height = Math.max(endY - this.startY, 20);
     // if (this.width < 20) {
     //     this.startX -= 10;
     //     this.width = 20;

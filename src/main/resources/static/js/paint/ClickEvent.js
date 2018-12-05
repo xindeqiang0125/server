@@ -390,7 +390,7 @@ function addImg() {
 
 function addRect() {
     var rect = new Rect();
-    rect.setStyle(16, '#ff0000', '#00ff00').setShapeSize(85, 146);
+    rect.setStyle(2, '#ff0000', '#00ff00').setShapeSize(100, 50);
     screen.addShape(rect);
     screen.reDraw();
 }
@@ -398,7 +398,7 @@ function addRect() {
 function addCircle() {
     var circle = new Circle();
     // circle.setPoints([{x:10,y:20},{x:20,y:10},{x:30,y:20},{x:20,y:30}]);
-    circle.setAB(156, 87);
+    circle.setAB(20, 20);
     screen.addShape(circle);
     screen.reDraw();
 }
@@ -406,7 +406,7 @@ function addCircle() {
 function addPolygon() {
     var polygon = new Polygon();
     polygon.setPoints([{x: 30, y: 30}, {x: 30, y: 60}, {x: 60, y: 60}, {x: 60, y: 30}, {x: 45, y: 45}])
-        .setStyle(6, '#ff0000', '#00ff00');
+        .setStyle(2, '#ff0000', '#00ff00');
     screen.addShape(polygon);
     screen.reDraw();
 }
@@ -415,7 +415,7 @@ function addLine() {
     var line = new Line();
     // line.setPoints([{x: 10, y: 10}, {x: 30, y: 30}])
 
-    line.setStyle(20, '#ff0000');
+    line.setStyle(2, '#ff0000');
     line.setLineLength(40);
     screen.addShape(line);
     screen.reDraw();
@@ -423,14 +423,14 @@ function addLine() {
 
 function addLineArrow() {
     var lineArrow = new LineArrow();
-    lineArrow.setStyle(20, '#ff0000').setLineLength(150);
+    lineArrow.setStyle(2, '#ff0000').setLineLength(100);
     screen.addShape(lineArrow);
     screen.reDraw();
 }
 
 function addText() {
     var text = new Text();
-    text.setStyle('#0000ff',23,'rgba(255,255,255,0)').setText('qqq辛德强\nAAA\n得分');
+    text.setStyle('#0000ff',23,'rgba(255,255,255,0)').setText('OPC\n组态');
     screen.addShape(text);
     screen.reDraw();
 }
