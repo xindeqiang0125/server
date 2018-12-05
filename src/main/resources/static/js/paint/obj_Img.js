@@ -1,5 +1,5 @@
 function Img() {
-    var that = this;
+
     this.id = shapeId.next();
     this.type = 'image';
     this.startX = 0;
@@ -11,16 +11,7 @@ function Img() {
     this.isVMirror = false;
     this.angle = 0;
     this.hasLoaded = false;
-    this.image = new Image();
-    // this.image.src = null;
-    this.image.onload = function (ev) {
-        if (!that.hasLoaded) {
-            that.width = this.width;
-            that.height = this.height;
-            that.hasLoaded = true;
-        }
-        screen.reDraw();
-    };
+
 }
 
 Img.prototype = new Shape();
@@ -35,6 +26,17 @@ Img.prototype.draw = function () {
 
 };
 Img.prototype.setImageUrl=function (url) {
+    var that = this;
+    this.image = new Image();
+    // this.image.src = null;
+    this.image.onload = function (ev) {
+        if (!that.hasLoaded) {
+            that.width = this.width;
+            that.height = this.height;
+            that.hasLoaded = true;
+        }
+        screen.reDraw();
+    };
     this.image.src = url;
 };
 Img.prototype.readFromFile = function (file) {
@@ -45,7 +47,7 @@ Img.prototype.readFromFile = function (file) {
     oFReader.onload = function (oFREvent) {
         // console.log(oFREvent.target.result);//base64
         that.base64 = oFREvent.target.result;
-        that.image.src = that.base64;
+        that.setImageUrl(that.base64);
     };
 };
 

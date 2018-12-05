@@ -345,6 +345,7 @@ function onImgChange(file) {
     if (list.length == 1 && list[0].type == 'image') {
         list[0].readFromFile(file);
     }
+    document.getElementById('image_file').value='';
 }
 
 var imgDatas = {
@@ -370,7 +371,7 @@ function setImgDatas(shape) {
     $('#cspaint_propertygrid').propertygrid({
         data: imgDatas,
         onClickCell:function(index, field, value){
-            if (index == 7){
+            if (index == 7&&imgDatas.rows[1].value=='image'){
                 $('#image_file').click()
             }
         },
