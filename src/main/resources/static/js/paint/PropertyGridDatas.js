@@ -371,7 +371,7 @@ function setImgDatas(shape) {
     $('#cspaint_propertygrid').propertygrid({
         data: imgDatas,
         onClickCell:function(index, field, value){
-            if (index == 7&&imgDatas.rows[1].value=='image'){
+            if (index == 7&&$('#cspaint_propertygrid').propertygrid('getData').rows[1].value=='image'){
                 $('#image_file').click()
             }
         },

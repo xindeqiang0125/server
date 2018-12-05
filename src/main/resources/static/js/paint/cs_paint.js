@@ -144,17 +144,9 @@ $('#cspaint_propertygrid').propertygrid({
     editorHeight: 50,
     data: {
         "total": 4, "rows": [
-            {"name": "ID", "value": "Bill Smith", "group": "ID Settings", "editor": "text"},
-            {"name": "Address", "value": "", "group": "ID Settings", "editor": "text"},
-            {"name": "SSN", "value": "123-456-7890", "group": "ID Settings", "editor": "text"},
-            {
-                "name": "Email", "value": "bill@gmail.com", "group": "Marketing Settings", "editor": {
-                "type": "validatebox",
-                "options": {
-                    "validType": "email"
-                }
-            }
-            }
+            {"name": "Name", "value": "Xin Deqiang", "group": "Author"},
+            {"name": "Address", "value": "Nanjing University", "group": "Author"},
+            {"name": "Email", "value": "xdqnd2012@163.com", "group": "Author"}
         ]
     }
 });
