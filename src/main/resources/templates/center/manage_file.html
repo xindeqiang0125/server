@@ -15,10 +15,10 @@
 <div id="file_dialog" style="width: 600px;height: 350px">
     <form id="file_dialog_form" method="post">
         <div><input id="file_id" name="id" data-options="label: 'Id:',readonly:true"/></div>
-        <div><input id="file_name" name="name" data-options="label: 'FileName:',required:true"/></div>
-        <div><input id="file_family" name="family" data-options="label: 'Family:',required:true"/></div>
-        <div><input id="file_detail" name="detail" data-options="label: 'Detail:'"/></div>
-        <div><input id="file_extension" name="extension" data-options="label: 'Extension:',readonly:true"/></div>
+        <div><input id="file_name" name="name" data-options="label: '名称:',required:true"/></div>
+        <div><input id="file_family" name="family" data-options="label: '类别:',required:true"/></div>
+        <div><input id="file_detail" name="detail" data-options="label: '详细信息:'"/></div>
+        <div><input id="file_extension" name="extension" data-options="label: '扩展名:',readonly:true"/></div>
     </form>
 </div>
 <style>
@@ -64,10 +64,10 @@
     initDatagridPanel3($('#dg_file'),'/files/search',
         [[
             {field:'id',title:'ID',width:20,align:'center'},
-            {field:'name',title:'FileName',width:150,align:'center'},
-            {field:'family',title:'Family',width:100,align:'center'},
-            {field:'detail',title:'Detail',width:100,align:'center'},
-            {field:'extension',title:'Extension',width:100,align:'center'}
+            {field:'name',title:'名称',width:150,align:'center'},
+            {field:'family',title:'类别',width:100,align:'center'},
+            {field:'detail',title:'详细信息',width:100,align:'center'},
+            {field:'extension',title:'扩展名',width:100,align:'center'}
         ]],$('#tb_file'),$('#file_add'),$('#file_edit'),$('#file_delete'),
         $('#file_dialog'),'修改FILE元数据',$('#file_dialog_form'),'/files/save','/files/delete',
         function (row) {

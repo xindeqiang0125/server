@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.xcs</groupId>
-	<artifactId>server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>xcs-server</artifactId>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>server</name>

@@ -14,7 +14,7 @@
 <div id="user_group_dialog" style="width: 400px">
     <form id="user_group_dialog_form" method="post">
         <input id="user_group_id" name="id" type="hidden"/>
-        <div><input id="user_group_name" name="name" data-options="label: 'Name:',required:true"/></div>
+        <div><input id="user_group_name" name="name" data-options="label: '名称:',required:true"/></div>
     </form>
     <div style="font-size: 15px;color: #1f637b">拥有权限：<a id="user_group_dialog_permissions_selectall">全选</a>
         <a id="user_group_dialog_permissions_unselectall">取消全选</a></div>
@@ -38,7 +38,7 @@
         '/user/findallusergroups',
         [[
             {field:'id',title:'ID',width:10,align:'center'},
-            {field:'name',title:'Name',width:10,align:'center'}
+            {field:'name',title:'名称',width:10,align:'center'}
         ]],
         $('#user_group_toolbar'),$('#user_group_add'),$('#user_group_edit'),$('#user_group_delete'),
         $('#user_group_dialog'),'增加/修改用户组',$('#user_group_dialog_form'),
