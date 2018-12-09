@@ -108,6 +108,13 @@ var cfgActions = {
         {text: 'hide', value: 'hide'},
         {text: 'twinkle', value: 'twinkle'}
     ],
+    image: [
+        {text: 'position.x', value: 'position.x'},
+        {text: 'position.y', value: 'position.y'},
+        {text: 'hide', value: 'hide'},
+        {text: 'twinkle', value: 'twinkle'},
+        {text: 'angle', value: 'angle'}
+    ],
     rect: [
         {text: 'position.x', value: 'position.x'},
         {text: 'position.y', value: 'position.y'},
@@ -126,7 +133,7 @@ var cfgActions = {
         {text: 'a', value: 'a'},
         {text: 'b', value: 'b'},
         {text: 'radius', value: 'radius'},
-        {text: 'radian', value: 'radian'},
+        {text: 'angle', value: 'angle'},
         {text: 'lineColor', value: 'lineColor'},
         {text: 'fillColor', value: 'fillColor'},
         {text: 'hide', value: 'hide'},

@@ -25,4 +25,3 @@ spring:
 file:
   upload:
     path: C:/xcs/upload_file/
-#    path: /usr/simulation_realdata_file/upload_file/
