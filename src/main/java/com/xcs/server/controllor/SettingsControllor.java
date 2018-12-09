@@ -19,12 +19,10 @@ public class SettingsControllor {
 
     @RequestMapping("/settings/save")
     public ResponseMsg saveSettings(Settings settings){
-//        System.out.println(settings.getSaveInterval());
         try {
             ServerSettings.setSettings(settings);
             settingsService.saveSettings(settings);
         } catch (Exception e) {
-            //e.printStackTrace();
             return ResponseMsg.getFailed("保存设置失败!!!");
         }
         return ResponseMsg.getSuccess("保存设置成功!!!");

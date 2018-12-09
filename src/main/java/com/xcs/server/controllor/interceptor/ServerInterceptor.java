@@ -11,10 +11,8 @@ import java.util.Set;
 
 @Component
 public class ServerInterceptor extends HandlerInterceptorAdapter {
-    //long start;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //start=System.currentTimeMillis();
         String requestURI = request.getRequestURI();
         Map<String, Object> user = (Map<String, Object>) request.getSession().getAttribute("user");
         if (user == null) {
@@ -22,10 +20,6 @@ public class ServerInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
         Set<String> permissionUris= (Set<String>) user.get("permissionUris");
-//        String name = (String) user.get("name");
-//        if (name.equals("辛德强")) {
-//            return true;
-//        }
         if (permissionUris.contains(requestURI)) {
             return true;
         }
@@ -38,7 +32,5 @@ public class ServerInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         super.postHandle(request, response, handler, modelAndView);
-        //long end=System.currentTimeMillis();
-        //System.out.println(end - start);
     }
 }

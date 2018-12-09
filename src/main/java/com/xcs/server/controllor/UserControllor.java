@@ -24,7 +24,6 @@ public class UserControllor {
     @Autowired
     private PermissionService permissionService;
 
-    //<editor-fold desc="permission">
 
     /**
      * 查询所有权限分类
@@ -68,9 +67,7 @@ public class UserControllor {
         permissionService.deletePermission(id);
         return new ResponseMsg(ResponseMsg.SUCCESS,"删除成功！");
     }
-    //</editor-fold>
 
-    //<editor-fold desc="usergroup">
     @RequestMapping("/user/findallusergroups")
     public List<UserGroup> findAllUserGroups(){
         return userService.findAllUserGroup();
@@ -117,10 +114,8 @@ public class UserControllor {
         } catch (Exception e) { }
         return permissions;
     }
-    //</editor-fold>
 
 
-    //<editor-fold desc="user">
     @RequestMapping("/user/findusersbynameortel_page")
     public Map<String, Object> findUsersByNameOrTel(String nameOrTel, Integer page, Integer rows){
         Map<String,Object> res=new HashMap<>();
@@ -129,7 +124,6 @@ public class UserControllor {
             res.put("total",users.getTotalElements());
             res.put("rows",users.getContent());
         } catch (Exception e) {
-//            e.printStackTrace();
             res.put("total",0);
             res.put("rows",new ArrayList());
         }
@@ -141,7 +135,6 @@ public class UserControllor {
         try {
             userService.saveUser(user);
         } catch (Exception e) {
-            //e.printStackTrace();
             return ResponseMsg.getFailed("保存用户失败");
         }
         return ResponseMsg.getSuccess("保存用户成功");
@@ -152,10 +145,8 @@ public class UserControllor {
         try {
             userService.deleteUser(ids);
         } catch (Exception e) {
-//            e.printStackTrace();
             return ResponseMsg.getFailed("删除用户失败");
         }
         return ResponseMsg.getSuccess("删除用户成功");
     }
-    //</editor-fold>
 }

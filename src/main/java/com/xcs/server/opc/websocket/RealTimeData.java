@@ -38,19 +38,10 @@ public class RealTimeData implements OnSubscribeResponse {
     @OnOpen
     public void onOpen(Session session) {
         this.session=session;
-
-//        String message="[6,7,8,9,10,11,12,13,14,15,1,2,3,4,5]";
-//        //String message="[]";
-//        Gson gson=new Gson();
-//        itemIds=gson.fromJson(message,new TypeToken<ArrayList<Integer>>(){}.getType());
-//
-//        dataMemory=new DataMemory();
-//        dataMemory.setOnSubscribeResponse(this);
     }
 
     @OnClose
     public void onClose() {
-        //System.out.println("关闭连接");
         dataMemory.stop();
     }
 

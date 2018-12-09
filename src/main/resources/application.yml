@@ -1,6 +1,5 @@
 server:
   port: 80
-#  context-path: /xcs
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -20,8 +19,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-
 file:
   upload:
     path: C:/xcs/upload_file/

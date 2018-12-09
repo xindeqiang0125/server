@@ -89,30 +89,6 @@ public class HistoryManageServiceImpl implements HistoryManageService {
                 default:
                     break;
             }
-
-//            XItem xItem = new XItem();
-//            xItem.setId(id);
-//            switch (data.getVariantType()) {
-//                case 4://float
-//                case 5://double
-//                    doubleHistoryRepository.save(new DoubleHistory(data.getDouble(), now, xItem));
-//                    break;
-//                case 2://short
-//                    integerHistoryRepository.save(new IntegerHistory(new Integer(data.getWord()), now, xItem));
-//                    break;
-//                case 17://byte
-//                case 22://integer
-//                    integerHistoryRepository.save(new IntegerHistory(data.getInteger(), now, xItem));
-//                    break;
-//                case 11://boolean
-//                    booleanHistoryRepository.save(new BooleanHistory(data.getBoolean(), now, xItem));
-//                    break;
-//                case 8://string
-//                    stringHistoryRepository.save(new StringHistory(data.getString(), now, xItem));
-//                    break;
-//                default:
-//                    break;
-//            }
         }
     }
 }
