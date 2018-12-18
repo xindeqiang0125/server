@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,20 @@ public class LoginControllor {
         session.setAttribute("user",checkUser);
         response.sendRedirect("/main");
         return null;
+    }
+
+    @ResponseBody
+    @RequestMapping("/applogin")
+    public ResponseMsg appLogin(String telephone,String password){
+        try {
+            User user = new User();
+            user.setTel(telephone);
+            user.setPassword(password);
+            Map<String, Object> map = userService.checkUser(user);
+            return ResponseMsg.getSuccess(map);
+        } catch (Exception e) {
+            return ResponseMsg.getFailed("登录失败");
+        }
     }
 
     @RequestMapping("/logout")

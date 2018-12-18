@@ -25,6 +25,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
                 .excludePathPatterns("/")
                 .excludePathPatterns("/no_permission")
                 .excludePathPatterns("/login")
+                .excludePathPatterns("/applogin")
                 .excludePathPatterns("/logout")
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/center/cs_paint")
