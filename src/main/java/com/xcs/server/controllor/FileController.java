@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class FileController {
@@ -57,6 +58,16 @@ public class FileController {
     @RequestMapping(value = "/files/all")
     public List<FileDetail> findAll() {
         return fileDetailService.findAll();
+    }
+
+    @RequestMapping(value = "/files/familys")
+    public Set<String> findAllFamilys() {
+        return fileDetailService.findAllFamilys();
+    }
+
+    @RequestMapping(value = "/files/byfamily")
+    public List<FileDetail> findByFamily(String family) {
+        return fileDetailService.findByFamily(family);
     }
 
     @RequestMapping(value = "/files/content")

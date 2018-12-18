@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FileDetailService {
     /**
@@ -22,4 +23,8 @@ public interface FileDetailService {
     Page<FileDetail> search(String name, Pageable pageable);
 
     FileDetail upload(FileDetail fileDetail);
+
+    Set<String> findAllFamilys();
+
+    List<FileDetail> findByFamily(String family);
 }

@@ -31,6 +31,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
                 .excludePathPatterns("/manage/getitem")
                 .excludePathPatterns("/files/all")
                 .excludePathPatterns("/files/content")
+                .excludePathPatterns("/files/familys")
+                .excludePathPatterns("/files/byfamily")
                 .excludePathPatterns("/gethistory");
         registry.addInterceptor(mainPageInterceptor).addPathPatterns("/main")
                 .addPathPatterns("/west").addPathPatterns("/center");

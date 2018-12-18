@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -61,5 +63,21 @@ public class FileDetailServiceImpl implements FileDetailService {
     public FileDetail upload(FileDetail fileDetail) {
         FileDetail save = fileDetailRepository.save(fileDetail);
         return save;
+    }
+
+    @Override
+    public Set<String> findAllFamilys() {
+        Set<String> familys = new HashSet<>();
+        List<FileDetail> details = fileDetailRepository.findAll();
+        for (FileDetail detail : details) {
+            familys.add(detail.getFamily());
+        }
+        return familys;
+    }
+
+    @Override
+    public List<FileDetail> findByFamily(String family) {
+        List<FileDetail> details = fileDetailRepository.findByFamily(family);
+        return details;
     }
 }
