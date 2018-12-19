@@ -81,4 +81,9 @@ public class UserServiceImpl implements UserService {
         res.put("permissionUris", permissionStrings);
         return res;
     }
+
+    @Override
+    public void updateUser(String tel, String name, String password) {
+        userRepository.updateNameAndPassword(tel, name, password);
+    }
 }

@@ -28,4 +28,6 @@ public interface UserService {
     void deleteUser(List<Integer> ids);
 
     Map<String, Object> checkUser(User user);
+
+    void updateUser(String tel, String name, String password);
 }

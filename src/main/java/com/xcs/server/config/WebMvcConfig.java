@@ -30,6 +30,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/center/cs_paint")
                 .excludePathPatterns("/manage/getitem")
+                .excludePathPatterns("/manage/getitemsbypage")
+                .excludePathPatterns("/user/updateuser")
                 .excludePathPatterns("/files/all")
                 .excludePathPatterns("/files/content")
                 .excludePathPatterns("/files/familys")

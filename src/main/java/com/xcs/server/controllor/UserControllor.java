@@ -149,4 +149,14 @@ public class UserControllor {
         }
         return ResponseMsg.getSuccess("删除用户成功");
     }
+
+    @RequestMapping("/user/updateuser")
+    public ResponseMsg updateUser(String tel,String name,String password){
+        try {
+            userService.updateUser(tel,name,password);
+        } catch (Exception e) {
+            return ResponseMsg.getFailed("更新信息失败");
+        }
+        return ResponseMsg.getSuccess("更新信息成功");
+    }
 }
