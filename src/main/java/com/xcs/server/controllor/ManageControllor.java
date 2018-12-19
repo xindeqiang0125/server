@@ -249,7 +249,7 @@ public class ManageControllor {
         res.put("rows",items.getContent());
         return res;
     }
-    @PostMapping("/manage/getallitemsbypage")
+    @RequestMapping("/manage/getallitemsbypage")
     public Map<String,Object> getItems(Integer page,Integer rows){
         if (page == null) page=1;
         if (rows == null) rows=10;
@@ -260,13 +260,13 @@ public class ManageControllor {
         return res;
     }
 
-    @GetMapping("/manage/getitem")
+    @RequestMapping("/manage/getitem")
     public XItem getItems(Integer itemId){
         if (itemId == null) itemId=1;
         return opcManageService.getItem(itemId);
     }
 
-    @GetMapping("/gethistory")
+    @RequestMapping("/gethistory")
     public List getHistory(Integer itemId,String start,String end){
         if (itemId == null) itemId=1;
         if (start == null) start="2007-12-03T10:15:30";
