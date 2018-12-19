@@ -238,7 +238,7 @@ public class ManageControllor {
         return new ResponseMsg(ResponseMsg.SUCCESS,"删除成功！");
     }
 
-    @PostMapping("/manage/getitemsbypage")
+    @RequestMapping("/manage/getitemsbypage")
     public Map<String,Object> getItems(Integer groupId,String itemName,Integer page,Integer rows){
         if (itemName == null) itemName="";
         if (page == null) page=1;
