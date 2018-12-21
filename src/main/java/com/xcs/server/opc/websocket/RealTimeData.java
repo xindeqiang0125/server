@@ -23,21 +23,23 @@ public class RealTimeData implements OnSubscribeResponse {
     private Session session;
     private DataMemory dataMemory;
     private List<Integer> itemIds;
+    private Gson gson = new Gson();
+
     @OnMessage
     public void onMessage(String message, Session session) throws IOException, InterruptedException {
         try {
-            Gson gson=new Gson();
-            itemIds=gson.fromJson(message,new TypeToken<ArrayList<Integer>>(){}.getType());
-            dataMemory=new DataMemory();
+            itemIds = gson.fromJson(message, new TypeToken<ArrayList<Integer>>() {
+            }.getType());
+            dataMemory = new DataMemory();
             dataMemory.setOnSubscribeResponse(this);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
     @OnOpen
     public void onOpen(Session session) {
-        this.session=session;
+        this.session = session;
     }
 
     @OnClose
@@ -47,10 +49,11 @@ public class RealTimeData implements OnSubscribeResponse {
 
     @Override
     public void subscribeResponse(Map<Integer, Variant> datas) {
-        Map<Integer, Variant> response=new HashMap<Integer, Variant>();
-        for (Integer itemId:itemIds){
-            response.put(itemId,datas.get(itemId));
+        Map<String, String> response = new HashMap<>();
+        for (Integer itemId : itemIds) {
+            response.put(itemId.toString(), datas.get(itemId).toString());
         }
-        this.session.getAsyncRemote().sendText(response.toString());
+        String json = gson.toJson(response);
+        this.session.getAsyncRemote().sendText(json);
     }
 }
