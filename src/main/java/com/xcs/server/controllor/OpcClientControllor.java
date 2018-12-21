@@ -12,9 +12,13 @@ public class OpcClientControllor {
         if (OpcClient.running){
             return ResponseMsg.getFailed("OpcClient正在运行!!!无需重复启动!!!");
         }else {
-            client=new OpcClient();
-            client.start();
-            return ResponseMsg.getSuccess("开启opcClient成功");
+            try {
+                client=new OpcClient();
+                client.start();
+                return ResponseMsg.getSuccess("开启opcClient成功");
+            } catch (Exception e) {
+                return ResponseMsg.getFailed("开启opcClient失败");
+            }
         }
     }
     @RequestMapping("/opcClientStop")
@@ -23,8 +27,12 @@ public class OpcClientControllor {
             return ResponseMsg.getFailed("OpcClient已经关闭!!!无需重复关闭!!!");
         }
         else {
-            client.stop();
-            return ResponseMsg.getSuccess("关闭opcClient成功");
+            try {
+                client.stop();
+                return ResponseMsg.getSuccess("关闭opcClient成功");
+            } catch (Exception e) {
+                return ResponseMsg.getFailed("关闭opcClient失败");
+            }
         }
 
     }
