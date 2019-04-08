@@ -21,7 +21,12 @@
                 <a id="settings_save_btn" class="easyui-linkbutton">保存</a>
             </div>
             <div><input id="push_interval" name="pushInterval"/></div>
-            <div style="display: none"><input id="save_interval" name="saveInterval"/></div>
+            <div><select id="save_enable" class="easyui-combobox" name="saveEnable">
+                <option>是</option>
+                <option>否</option>
+            </select></div>
+
+            <div><input id="save_interval" name="saveInterval"/></div>
         </div>
     </div>
 
@@ -66,10 +71,17 @@
         precision: 0
     });
     $('#push_interval').numberbox({
-        label: '推送间隔(毫秒)'
+        label: '实时数据推送间隔(毫秒)'
     });
     $('#save_interval').numberbox({
-        label: '历史数据存取间隔(毫秒)'
+        label: '历史数据存储间隔(毫秒)'
+    });
+    $('#save_enable').combobox({
+        required: true,
+        width: 400,
+        height: 30,
+        labelWidth: 150,
+        label: '启动历史数据存存储'
     });
     $('#start_opc_btn').click(function () {
         $.post('/opcClientStart', {}, function (data) {
