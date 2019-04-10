@@ -19,6 +19,13 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  redis:
+    host: 192.168.3.128
+    password: xdq123
+data:
+  memory:
+    strategy: memory
+
 file:
   upload:
     path: C:/xcs/upload_file/

@@ -3,11 +3,9 @@ package com.xcs.server.opc.service;
 import com.xcs.server.domain.opc.XGroup;
 import com.xcs.server.domain.opc.XItem;
 import com.xcs.server.domain.opc.XOpc;
-import com.xcs.server.opc.data.DataMemory;
-import com.xcs.server.service.HistoryManageService;
-import com.xcs.server.service.HistoryManageServiceImpl;
-import com.xcs.server.service.OpcManageService;
-import com.xcs.server.service.OpcManageServiceImpl;
+import com.xcs.server.opc.data.Value;
+import com.xcs.server.opc.memory.DataMemory;
+import com.xcs.server.service.*;
 import com.xcs.server.util.SpringUtil;
 import javafish.clients.opc.JEasyOpc;
 import javafish.clients.opc.asynch.AsynchEvent;
@@ -28,9 +26,14 @@ public class OpcClient implements OpcAsynchGroupListener {
     private HistoryManageService historyManageService;
     private OpcManageService opcManageService;
 
+    private DataMemory dataMemory;
+    private ItemTypeService itemTypeService;
+
     public OpcClient() {
         historyManageService = SpringUtil.getApplicationContext().getBean(HistoryManageServiceImpl.class);
         opcManageService = SpringUtil.getApplicationContext().getBean(OpcManageServiceImpl.class);
+        dataMemory = SpringUtil.getApplicationContext().getBean(DataMemory.class);
+        itemTypeService = SpringUtil.getApplicationContext().getBean(ItemTypeService.class);
         jEasyOpcs = new ArrayList<JEasyOpc>();
         opcGroups = new ArrayList<OpcGroup>();
         opcItems = new ArrayList<OpcItem>();
@@ -101,13 +104,21 @@ public class OpcClient implements OpcAsynchGroupListener {
             sb.append(opcItem.getItemName());
 
             Integer itemId=itemNameIdMap.get(sb.toString());
-            if (!opcItem.getValue().equals(DataMemory.getDatas().get(itemId))){
-                DataMemory.getDatas().put(itemId,opcItem.getValue());
-                datas.put(itemId,opcItem.getValue());
+            if (!opcItem.getValue().equals(dataMemory.get(itemId.toString()))){
+                String itemType = itemTypeService.getItemType(itemId);
+                dataMemory.put(itemId.toString(),getValue(itemType,opcItem.getValue()));
             }
+//            if (!opcItem.getValue().equals(DataMemory.getDatas().get(itemId))){
+//                DataMemory.getDatas().put(itemId,opcItem.getValue());
+//                datas.put(itemId,opcItem.getValue());
+//            }
         }
         //存入数据库操作
-        saveChangedDatasToDatabase(datas,now);
+//        saveChangedDatasToDatabase(datas,now);
+    }
+
+    private Value getValue(String itemType, Variant value) {
+        return new Value(value.toString(),itemType);
     }
 
     private void saveChangedDatasToDatabase(Map<Integer, Variant> datas, LocalDateTime now) {
