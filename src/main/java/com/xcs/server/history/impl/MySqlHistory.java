@@ -1,16 +1,18 @@
-package com.xcs.server.service;
+package com.xcs.server.history.impl;
 
 import com.xcs.server.domain.BooleanHistory;
 import com.xcs.server.domain.DoubleHistory;
 import com.xcs.server.domain.IntegerHistory;
 import com.xcs.server.domain.StringHistory;
 import com.xcs.server.domain.opc.XItem;
+import com.xcs.server.history.History;
+import com.xcs.server.opc.memory.ValueMap;
 import com.xcs.server.repository.BooleanHistoryRepository;
 import com.xcs.server.repository.DoubleHistoryRepository;
 import com.xcs.server.repository.IntegerHistoryRepository;
 import com.xcs.server.repository.StringHistoryRepository;
 import com.xcs.server.repository.opc.ItemRepository;
-import javafish.clients.opc.variant.Variant;
+import com.xcs.server.service.ItemTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
-public class HistoryManageServiceImpl implements HistoryManageService {
+public class MySqlHistory implements History {
     @Autowired
     private IntegerHistoryRepository integerHistoryRepository;
     @Autowired
@@ -33,12 +34,14 @@ public class HistoryManageServiceImpl implements HistoryManageService {
     private BooleanHistoryRepository booleanHistoryRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ItemTypeService itemTypeService;
 
     @Override
     public List getDataHistory(Integer itemId, LocalDateTime start, LocalDateTime end) {
         List list = new ArrayList();
         Object element;
-        switch (itemRepository.findOne(itemId).getType().toUpperCase()) {
+        switch (itemTypeService.getItemType(itemId)) {
             case "DOUBLE":
                 list = doubleHistoryRepository.findByXItem_IdAndTimeBetween(itemId, start, end);
                 element = doubleHistoryRepository.findFirstByXItem_IdAndTimeBeforeOrderByTimeDesc(itemId, start);
@@ -66,29 +69,25 @@ public class HistoryManageServiceImpl implements HistoryManageService {
     }
 
     @Override
-    public void saveHistoryDatas(Map<Integer, Variant> datas, LocalDateTime now) {
-        for (Map.Entry<Integer, Variant> entry : datas.entrySet()) {
-            Integer id = entry.getKey();
-            Variant data = entry.getValue();
-            XItem xItem = itemRepository.findOne(id);
-            switch (xItem.getType().toUpperCase()) {
+    public void saveHistoryDatas(ValueMap datas, LocalDateTime now) {
+        datas.forEach((s, value) -> {
+            XItem xItem = itemRepository.findOne(Integer.valueOf(s));
+            switch (value.getType()) {
                 case "DOUBLE":
-                    doubleHistoryRepository.save(new DoubleHistory(data.getDouble(), now, xItem));
+                    doubleHistoryRepository.save(new DoubleHistory(value.doubleValue(), now, xItem));
                     break;
                 case "INTEGER":
-                    if (data.getVariantType() == 2)
-                        integerHistoryRepository.save(new IntegerHistory((int) data.getWord(), now, xItem));
-                    else integerHistoryRepository.save(new IntegerHistory(data.getInteger(), now, xItem));
+                        integerHistoryRepository.save(new IntegerHistory(value.integerValue(), now, xItem));
                     break;
                 case "STRING":
-                    stringHistoryRepository.save(new StringHistory(data.getString(), now, xItem));
+                    stringHistoryRepository.save(new StringHistory(value.stringValue(), now, xItem));
                     break;
                 case "BOOLEAN":
-                    booleanHistoryRepository.save(new BooleanHistory(data.getBoolean(), now, xItem));
+                    booleanHistoryRepository.save(new BooleanHistory(value.booleanValue(), now, xItem));
                     break;
                 default:
                     break;
             }
-        }
+        });
     }
 }

@@ -24,7 +24,11 @@ spring:
     password: xdq123
 data:
   memory:
-    strategy: memory
+    strategy: redis
+
+hdfs:
+  uri: hdfs://192.168.3.128:9000
+  user: root
 
 file:
   upload:

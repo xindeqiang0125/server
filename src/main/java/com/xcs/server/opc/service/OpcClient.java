@@ -23,14 +23,12 @@ public class OpcClient implements OpcAsynchGroupListener {
     private List<OpcGroup> opcGroups;
     private List<OpcItem> opcItems;
     private Map<String,Integer> itemNameIdMap;
-    private HistoryManageService historyManageService;
     private OpcManageService opcManageService;
 
     private DataMemory dataMemory;
     private ItemTypeService itemTypeService;
 
     public OpcClient() {
-        historyManageService = SpringUtil.getApplicationContext().getBean(HistoryManageServiceImpl.class);
         opcManageService = SpringUtil.getApplicationContext().getBean(OpcManageServiceImpl.class);
         dataMemory = SpringUtil.getApplicationContext().getBean(DataMemory.class);
         itemTypeService = SpringUtil.getApplicationContext().getBean(ItemTypeService.class);
@@ -121,15 +119,15 @@ public class OpcClient implements OpcAsynchGroupListener {
         return new Value(value.toString(),itemType);
     }
 
-    private void saveChangedDatasToDatabase(Map<Integer, Variant> datas, LocalDateTime now) {
-        //System.out.println(datas.size());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                historyManageService.saveHistoryDatas(datas,now);
-            }
-        }).start();
-    }
+//    private void saveChangedDatasToDatabase(Map<Integer, Variant> datas, LocalDateTime now) {
+//        //System.out.println(datas.size());
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                historyManageService.saveHistoryDatas(datas,now);
+//            }
+//        }).start();
+//    }
 
     /**
      * 判断实时数据内存缓冲区的数据是否需要更新（根据opcGroup的死区，opcItem值和缓冲区中现有数据判断）

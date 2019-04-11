@@ -28,7 +28,9 @@ public class RedisDataMemory extends AbstractDataMemory {
 
     @Override
     protected synchronized ValueMap getChangedDatas() {
-        return getDataMap(toRedisKeys(changedPoints));
+        ValueMap dataMap = getDataMap(toRedisKeys(changedPoints));
+        changedPoints.clear();
+        return dataMap;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class RedisDataMemory extends AbstractDataMemory {
 
     @Override
     public void put(String key, Value value) {
-        redisTemplate.opsForValue().set("ItemValue:" + key, value);
         super.put(key, value);
+        redisTemplate.opsForValue().set("ItemValue:" + key, value);
     }
 }

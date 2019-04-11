@@ -1,5 +1,7 @@
 package com.xcs.server.opc.data;
 
+import java.util.Objects;
+
 public class Value {
     private String value;
     private String type;
@@ -51,6 +53,20 @@ public class Value {
     @Override
     public String toString() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Value value1 = (Value) o;
+        return Objects.equals(value, value1.value) &&
+                Objects.equals(type, value1.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, type);
     }
 
     public static class Type {

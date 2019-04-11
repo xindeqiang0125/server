@@ -3,7 +3,7 @@ package com.xcs.server.controllor;
 import com.xcs.server.domain.opc.XGroup;
 import com.xcs.server.domain.opc.XItem;
 import com.xcs.server.domain.opc.XOpc;
-import com.xcs.server.service.HistoryManageService;
+import com.xcs.server.history.impl.MySqlHistory;
 import com.xcs.server.service.OpcManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ public class ManageControllor {
     @Autowired
     private OpcManageService opcManageService;
     @Autowired
-    private HistoryManageService historyManageService;
+    private MySqlHistory mySqlHistory;
 
     @GetMapping("/initopcs")
     public void initDatas(){
@@ -270,7 +270,7 @@ public class ManageControllor {
     public List getHistory(Integer itemId,String start,String end){
         if (itemId == null) itemId=1;
         if (start == null) start="2007-12-03T10:15:30";
-        if (end == null) end="2007-12-03T10:15:31";
-        return historyManageService.getDataHistory(itemId, LocalDateTime.parse(start),LocalDateTime.parse(end));
+        if (end == null) end="2020-12-03T10:15:31";
+        return mySqlHistory.getDataHistory(itemId, LocalDateTime.parse(start),LocalDateTime.parse(end));
     }
 }

@@ -13,8 +13,8 @@ public class MapDataMemory extends AbstractDataMemory {
     private ValueMap datas = new ValueMap();
     @Override
     public void put(String key, Value value) {
-        datas.put(key, value);
         super.put(key, value);
+        datas.put(key, value);
     }
 
     @Override
