@@ -60,7 +60,7 @@ public class HdfsHistory implements History {
             IOUtils.closeStream(integerOut);
             IOUtils.closeStream(stringOut);
             IOUtils.closeStream(booleanOut);
-            fileSystem.close();
+            if (fileSystem != null) fileSystem.close();
             logger.info("HDFS历史数据资源回收完成");
         } catch (IOException e) {
             e.printStackTrace();
