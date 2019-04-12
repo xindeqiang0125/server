@@ -20,6 +20,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
         super.addInterceptors(registry);
         registry.addInterceptor(serverInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/main")
+                .excludePathPatterns("/close")
                 .excludePathPatterns("/west")
                 .excludePathPatterns("/center")
                 .excludePathPatterns("/")

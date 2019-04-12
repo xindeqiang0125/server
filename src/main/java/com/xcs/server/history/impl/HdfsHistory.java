@@ -6,10 +6,13 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -17,6 +20,8 @@ import java.util.List;
 
 @Component
 public class HdfsHistory implements History {
+
+    private static final Logger logger = LoggerFactory.getLogger(HdfsHistory.class);
 
     @Value("${hdfs.uri}")
     private String hadoopUri;
@@ -31,9 +36,9 @@ public class HdfsHistory implements History {
     private FSDataOutputStream booleanOut;
 
     @PostConstruct
-    public void setUp(){
+    public void setUp() {
         try {
-            fileSystem = FileSystem.get(URI.create(hadoopUri),new Configuration(),hadoopUser);
+            fileSystem = FileSystem.get(URI.create(hadoopUri), new Configuration(), hadoopUser);
             if (!fileSystem.exists(new Path(rootPath))) {
                 fileSystem.mkdirs(new Path(rootPath));
             }
@@ -41,8 +46,25 @@ public class HdfsHistory implements History {
             integerOut = fileSystem.create(new Path(getHistoryFileName("integer")));
             stringOut = fileSystem.create(new Path(getHistoryFileName("string")));
             booleanOut = fileSystem.create(new Path(getHistoryFileName("boolean")));
+            logger.info("HDFS历史数据初始化完成");
         } catch (Exception e) {
             e.printStackTrace();
+            logger.info("HDFS历史数据初始化失败：" + e.getMessage());
+        }
+    }
+
+    @PreDestroy
+    public void tearDown() {
+        try {
+            doubleOut.close();
+            integerOut.close();
+            stringOut.close();
+            booleanOut.close();
+            fileSystem.close();
+            logger.info("HDFS历史数据资源回收完成");
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.info("HDFS历史数据资源回收失败" + e.getMessage());
         }
     }
 
@@ -59,7 +81,7 @@ public class HdfsHistory implements History {
 
     @Override
     public void saveHistoryDatas(ValueMap datas, LocalDateTime now) {
-        datas.forEach((s, value) -> writeRecord(s,value,now));
+        datas.forEach((s, value) -> writeRecord(s, value, now));
     }
 
     private void writeRecord(String id, com.xcs.server.opc.data.Value value, LocalDateTime now) {
@@ -68,16 +90,16 @@ public class HdfsHistory implements History {
         String record = sb.append(id).append(" ").append(value.toString()).append(" ")
                 .append(now.toString()).append("\n").toString();
         try {
-            if (com.xcs.server.opc.data.Value.Type.DOUBLE.equals(type)){
+            if (com.xcs.server.opc.data.Value.Type.DOUBLE.equals(type)) {
                 doubleOut.write(record.getBytes("utf-8"));
                 doubleOut.hsync();
-            } else if (com.xcs.server.opc.data.Value.Type.INTEGER.equals(type)){
+            } else if (com.xcs.server.opc.data.Value.Type.INTEGER.equals(type)) {
                 integerOut.write(record.getBytes("utf-8"));
                 integerOut.hsync();
-            }else if (com.xcs.server.opc.data.Value.Type.STRING.equals(type)){
+            } else if (com.xcs.server.opc.data.Value.Type.STRING.equals(type)) {
                 stringOut.write(record.getBytes("utf-8"));
                 stringOut.hsync();
-            }else {
+            } else {
                 booleanOut.write(record.getBytes("utf-8"));
                 booleanOut.hsync();
             }

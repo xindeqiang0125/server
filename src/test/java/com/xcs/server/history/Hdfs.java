@@ -47,7 +47,7 @@ public class Hdfs {
     @Test
     public void test5() throws IOException {
 //        FsStatus status = fileSystem.getStatus(new Path("/xcs-history/double-1554990253032"));
-        FSDataInputStream open = fileSystem.open(new Path("/xcs-history/double-1554990253032"));
+        FSDataInputStream open = fileSystem.open(new Path("/xcs-history/double-1555045277433"));
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         IOUtils.copyBytes(open, outputStream,1024);
         System.out.println(outputStream.size());

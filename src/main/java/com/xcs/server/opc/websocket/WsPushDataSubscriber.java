@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.xcs.server.opc.memory.DataMemory;
 import com.xcs.server.opc.memory.RequiredDataSubscriber;
 import com.xcs.server.opc.memory.ValueMap;
+import com.xcs.server.setting.SettingService;
 import com.xcs.server.util.SpringUtil;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,7 @@ import java.util.Set;
 @ServerEndpoint("/datas")
 public class WsPushDataSubscriber implements RequiredDataSubscriber {
     private DataMemory dataMemory;
+    private SettingService settingService;
 
     @Override
     public Set<String> getRequiredPoints() {
@@ -46,14 +48,16 @@ public class WsPushDataSubscriber implements RequiredDataSubscriber {
 
     private Set<String> itemIds;
     private Gson gson = new Gson();
+    private int onMessageTimes = 0;
 
     @OnMessage
-    public void onMessage(String message, Session session){
+    public void onMessage(String message, Session session) {
+        if (onMessageTimes++ > 0) return;
         try {
             itemIds = gson.fromJson(message, new TypeToken<HashSet<String>>() {
             }.getType());
-            dataMemory = SpringUtil.getApplicationContext().getBean(DataMemory.class);
-            dataMemory.addSubscriber(this, 1000);
+            int pushDataInterval= Integer.valueOf(settingService.getOne("push_data_interval").getValue());
+            dataMemory.addSubscriber(this, pushDataInterval);
         } catch (Exception e) {
 
         }
@@ -62,6 +66,8 @@ public class WsPushDataSubscriber implements RequiredDataSubscriber {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
+        dataMemory = SpringUtil.getApplicationContext().getBean(DataMemory.class);
+        settingService = SpringUtil.getApplicationContext().getBean(SettingService.class);
     }
 
     @OnClose

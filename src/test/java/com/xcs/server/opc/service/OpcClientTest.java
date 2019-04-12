@@ -1,6 +1,6 @@
 package com.xcs.server.opc.service;
 
-import com.xcs.server.domain.Settings;
+import com.xcs.server.controllor.LoginControllor;
 import com.xcs.server.opc.memory.DataMemory;
 import com.xcs.server.util.SpringUtil;
 import org.junit.Test;
@@ -43,6 +43,6 @@ public class OpcClientTest {
 
     @Test
     public void testGetBean(){
-        System.out.println(SpringUtil.getApplicationContext().getBean(Settings.class));
+        System.out.println(SpringUtil.getApplicationContext().getBean(LoginControllor.class));
     }
 }

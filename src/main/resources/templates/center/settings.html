@@ -20,13 +20,13 @@
             <div id="settings_toolbar" style="text-align: center">
                 <a id="settings_save_btn" class="easyui-linkbutton">保存</a>
             </div>
-            <div><input id="push_interval" name="pushInterval"/></div>
-            <div><select id="save_enable" class="easyui-combobox" name="saveEnable">
-                <option>是</option>
-                <option>否</option>
+            <div><input id="push_data_interval" name="push_data_interval"/></div>
+            <div><select id="enable_save_data" class="easyui-combobox" name="enable_save_data">
+                <option value="true">是</option>
+                <option value="false">否</option>
             </select></div>
 
-            <div><input id="save_interval" name="saveInterval"/></div>
+            <div><input id="save_data_interval" name="save_data_interval"/></div>
         </div>
     </div>
 
@@ -46,8 +46,9 @@
         iconCls:'icon-save',
         onClick:function () {
             $.post('/settings/save', {
-                pushInterval:$('#push_interval').numberbox('getValue'),
-                saveInterval:$('#save_interval').numberbox('getValue')
+                push_data_interval:$('#push_data_interval').numberbox('getValue'),
+                enable_save_data:$('#enable_save_data').combobox('getValue'),
+                save_data_interval:$('#save_data_interval').numberbox('getValue')
             }, function (data) {
                 showMessager(data);
             });
@@ -56,13 +57,14 @@
     $('#settings_window').panel({
         onBeforeOpen:function () {
             $.post('/settings/get',{},function (data) {
-                $('#push_interval').numberbox('setValue',data.pushInterval)
-                $('#save_interval').numberbox('setValue',data.saveInterval)
+                $('#push_data_interval').numberbox('setValue',data.msg.push_data_interval)
+                $('#enable_save_data').combobox('setValue',data.msg.enable_save_data)
+                $('#save_data_interval').numberbox('setValue',data.msg.save_data_interval)
             })
         }
     })
 
-    $('#push_interval,#save_interval').numberbox({
+    $('#push_data_interval,#save_data_interval').numberbox({
         required: true,
         width: 400,
         height: 30,
@@ -70,17 +72,19 @@
         min: 0,
         precision: 0
     });
-    $('#push_interval').numberbox({
+    $('#push_data_interval').numberbox({
         label: '实时数据推送间隔(毫秒)'
     });
-    $('#save_interval').numberbox({
+    $('#save_data_interval').numberbox({
         label: '历史数据存储间隔(毫秒)'
     });
-    $('#save_enable').combobox({
+    $('#enable_save_data').combobox({
         required: true,
         width: 400,
         height: 30,
         labelWidth: 150,
+        panelHeight: 'auto',
+        editable: false,
         label: '启动历史数据存存储'
     });
     $('#start_opc_btn').click(function () {
