@@ -29,4 +29,10 @@ public class HistoryFacade implements History {
         mySqlHistory.saveHistoryDatas(datas, now);
         hdfsHistory.saveHistoryDatas(datas, now);
     }
+
+    @Override
+    public void setUp() {
+        mySqlHistory.setUp();
+        hdfsHistory.setUp();
+    }
 }

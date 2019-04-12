@@ -31,6 +31,7 @@ public class HistoryDataSubscriber implements DataSubscriber {
             e.printStackTrace();
         }
         if (enableSaveData){
+            history.setUp();
             int saveDataInterval = Integer.valueOf(settingService.getOne("save_data_interval").getValue());
             dataMemory.addSubscriber(this,saveDataInterval);
         }

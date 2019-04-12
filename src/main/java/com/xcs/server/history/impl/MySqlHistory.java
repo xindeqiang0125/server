@@ -90,4 +90,9 @@ public class MySqlHistory implements History {
             }
         });
     }
+
+    @Override
+    public void setUp() {
+
+    }
 }

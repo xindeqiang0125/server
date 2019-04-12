@@ -6,12 +6,12 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.net.URI;
@@ -35,7 +35,7 @@ public class HdfsHistory implements History {
     private FSDataOutputStream stringOut;
     private FSDataOutputStream booleanOut;
 
-    @PostConstruct
+    @Override
     public void setUp() {
         try {
             fileSystem = FileSystem.get(URI.create(hadoopUri), new Configuration(), hadoopUser);
@@ -56,10 +56,10 @@ public class HdfsHistory implements History {
     @PreDestroy
     public void tearDown() {
         try {
-            doubleOut.close();
-            integerOut.close();
-            stringOut.close();
-            booleanOut.close();
+            IOUtils.closeStream(doubleOut);
+            IOUtils.closeStream(integerOut);
+            IOUtils.closeStream(stringOut);
+            IOUtils.closeStream(booleanOut);
             fileSystem.close();
             logger.info("HDFS历史数据资源回收完成");
         } catch (IOException e) {
