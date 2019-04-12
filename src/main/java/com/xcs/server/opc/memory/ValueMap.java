@@ -1,6 +1,6 @@
 package com.xcs.server.opc.memory;
 
-import com.xcs.server.opc.data.Value;
+import com.xcs.server.opc.Value;
 
 import java.util.HashMap;
 

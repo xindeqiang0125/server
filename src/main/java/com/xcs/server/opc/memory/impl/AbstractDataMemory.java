@@ -1,6 +1,6 @@
 package com.xcs.server.opc.memory.impl;
 
-import com.xcs.server.opc.data.Value;
+import com.xcs.server.opc.Value;
 import com.xcs.server.opc.memory.DataMemory;
 import com.xcs.server.opc.memory.DataSubscriber;
 import com.xcs.server.opc.memory.RequiredDataSubscriber;

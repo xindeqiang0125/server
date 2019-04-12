@@ -84,19 +84,19 @@ public class HdfsHistory implements History {
         datas.forEach((s, value) -> writeRecord(s, value, now));
     }
 
-    private void writeRecord(String id, com.xcs.server.opc.data.Value value, LocalDateTime now) {
+    private void writeRecord(String id, com.xcs.server.opc.Value value, LocalDateTime now) {
         String type = value.getType();
         StringBuilder sb = new StringBuilder();
         String record = sb.append(id).append(" ").append(value.toString()).append(" ")
                 .append(now.toString()).append("\n").toString();
         try {
-            if (com.xcs.server.opc.data.Value.Type.DOUBLE.equals(type)) {
+            if (com.xcs.server.opc.Value.Type.DOUBLE.equals(type)) {
                 doubleOut.write(record.getBytes("utf-8"));
                 doubleOut.hsync();
-            } else if (com.xcs.server.opc.data.Value.Type.INTEGER.equals(type)) {
+            } else if (com.xcs.server.opc.Value.Type.INTEGER.equals(type)) {
                 integerOut.write(record.getBytes("utf-8"));
                 integerOut.hsync();
-            } else if (com.xcs.server.opc.data.Value.Type.STRING.equals(type)) {
+            } else if (com.xcs.server.opc.Value.Type.STRING.equals(type)) {
                 stringOut.write(record.getBytes("utf-8"));
                 stringOut.hsync();
             } else {

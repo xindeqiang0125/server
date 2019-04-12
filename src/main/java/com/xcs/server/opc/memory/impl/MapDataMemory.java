@@ -1,6 +1,6 @@
 package com.xcs.server.opc.memory.impl;
 
-import com.xcs.server.opc.data.Value;
+import com.xcs.server.opc.Value;
 import com.xcs.server.opc.memory.ValueMap;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;

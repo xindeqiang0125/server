@@ -1,6 +1,6 @@
 package com.xcs.server.history.impl;
 
-import com.xcs.server.opc.data.Value;
+import com.xcs.server.opc.Value;
 import com.xcs.server.opc.memory.ValueMap;
 import org.junit.Before;
 import org.junit.Test;

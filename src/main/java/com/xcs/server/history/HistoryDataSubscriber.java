@@ -3,8 +3,7 @@ package com.xcs.server.history;
 import com.xcs.server.opc.memory.DataMemory;
 import com.xcs.server.opc.memory.DataSubscriber;
 import com.xcs.server.opc.memory.ValueMap;
-import com.xcs.server.setting.SettingService;
-import com.xcs.server.util.SpringUtil;
+import com.xcs.server.web.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,7 @@
 package com.xcs.server.opc.service;
 
-import com.xcs.server.controllor.LoginControllor;
+import com.xcs.server.web.controllor.LoginControllor;
+import com.xcs.server.opc.OpcClient;
 import com.xcs.server.opc.memory.DataMemory;
 import com.xcs.server.util.SpringUtil;
 import org.junit.Test;
