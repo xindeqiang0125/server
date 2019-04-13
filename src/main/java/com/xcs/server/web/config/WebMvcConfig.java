@@ -3,24 +3,30 @@ package com.xcs.server.web.config;
 import com.xcs.server.web.controllor.interceptor.MainPageInterceptor;
 import com.xcs.server.web.controllor.interceptor.ServerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter{
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private ServerInterceptor serverInterceptor;
     @Autowired
     private MainPageInterceptor mainPageInterceptor;
+
+    @Value("${shutdown.grace.path}")
+    private String graceShutdowmPath;
+    @Value("${shutdown.grace.key}")
+    private String graceShutdowmKey;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
         registry.addInterceptor(serverInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/main")
-                .excludePathPatterns("/close")
+                .excludePathPatterns("/" + graceShutdowmPath + "/" + graceShutdowmKey)
                 .excludePathPatterns("/west")
                 .excludePathPatterns("/center")
                 .excludePathPatterns("/")

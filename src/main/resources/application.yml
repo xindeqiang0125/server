@@ -22,6 +22,13 @@ spring:
   redis:
     host: 192.168.3.128
     password: xdq123
+
+shutdown:
+  grace:
+    path: close
+    key: xcs
+    addr: 192.168.2.101
+
 data:
   memory:
     strategy: redis
