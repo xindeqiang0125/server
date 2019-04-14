@@ -70,16 +70,6 @@ CREATE TABLE `file_detail` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `file_detail`
---
-
-LOCK TABLES `file_detail` WRITE;
-/*!40000 ALTER TABLE `file_detail` DISABLE KEYS */;
-INSERT INTO `file_detail` VALUES (18,'这是一个用于测试的组态文件','xcs','测试','测试圆形');
-/*!40000 ALTER TABLE `file_detail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `integer_history`
 --
 
