@@ -34,6 +34,7 @@ public class OpcClientTest {
         OpcClient client = new OpcClient();
         client.start();
         Thread.sleep(5000);
+        client.stop();
     }
 
     @Test
