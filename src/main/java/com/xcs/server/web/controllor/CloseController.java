@@ -23,7 +23,7 @@ public class CloseController {
     @Value("${shutdown.grace.addr}")
     private String graceShutdowmAddr;
 
-    @RequestMapping("/{path}/{key:[^\\.]+}")
+    @RequestMapping("/{path:(?:\\w{1,5})|(?:\\w{7,})|(?:(?!center)\\w)+}/{key:[^\\.]+}")
     public ResponseMsg close(@PathVariable String path, @PathVariable String key,
                              HttpServletResponse response,
                              HttpServletRequest request) throws IOException {

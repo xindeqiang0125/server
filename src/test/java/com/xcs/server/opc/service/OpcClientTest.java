@@ -24,6 +24,12 @@ public class OpcClientTest {
     DataMemory dataMemory;
 
     @Test
+    public void opcClient(){
+        OpcClient opcClient = new OpcClient();
+        opcClient.start();
+    }
+
+    @Test
     public void start() throws InterruptedException {
         OpcClient client = new OpcClient();
         client.start();
